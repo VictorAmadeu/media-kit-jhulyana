@@ -1,0 +1,128 @@
+# ---------------------------------------------------------
+# Media Kit (React + Vite + Tailwind + Supabase + GH Pages)
+# .gitignore — preparado para producción
+# IMPORTANTE: NO ignorar /docs porque se usa para GitHub Pages
+# ---------------------------------------------------------
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors / IDE
+.vscode/
+.vscode-test
+.idea/
+.history/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage
+*.lcov
+.nyc_output
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Snowpack
+web_modules/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional caches
+.npm
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn integrity / Plug'n'Play
+.yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Parcel / Generic caches
+.cache
+.parcel-cache
+
+# Next.js
+.next/
+out/
+
+# Nuxt
+.nuxt/
+dist/
+
+# Gatsby
+.cache/
+# public  # (descomenta si usas Gatsby y NO Next.js)
+
+# VuePress
+.vuepress/dist
+
+# VitePress
+**/.vitepress/dist
+**/.vitepress/cache
+
+# Docusaurus
+.docusaurus
+
+# Serverless
+.serverless/
+
+# FuseBox
+.fusebox/
+
+# DynamoDB Local
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# --- Vite / GitHub Pages ---
+# La build por defecto va a /dist (la moveremos/crearemos en /docs para Pages).
+# ¡NO ignores /docs!
+!docs/
+
+# --- Dotenv (mantén un .env.example con claves ficticias) ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# (Opcional) Supabase CLI local
+# .supabase/
