@@ -116,7 +116,7 @@ dist/
 # La build por defecto va a /dist (la moveremos/crearemos en /docs para Pages).
 # ¡NO ignores /docs!
 !docs/
-
+ 
 # --- Dotenv (mantén un .env.example con claves ficticias) ---
 .env
 .env.local
