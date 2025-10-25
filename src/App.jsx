@@ -1,22 +1,18 @@
 // src/App.jsx
+// App raíz de la SPA (aún sin router; se añadirá HashRouter en la etapa de routing).
+// - Integra los componentes globales: Header y Footer.
+// - Renderiza la página Home (Sobre Mí) completa mediante <HomePage />.
+// - Semántica: evitamos anidar <main> aquí porque HomePage ya expone su propio <main>.
+// - Branding: fondo beige y texto ink vía custom properties con sintaxis canónica Tailwind.
+
 import React from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { HomePage } from "./pages/HomePage";
 
-/**
- * App raíz de la SPA (sin router aún).
- * - Integra los componentes globales: Header y Footer.
- * - Define las URLs oficiales de redes para pasarlas al Footer.
- * - Estructura semántica con <main> y layout de altura completa.
- *
- * NOTA DE PRODUCCIÓN:
- * - No importamos App.css ni assets de la plantilla Vite (ya no se usan).
- * - Usamos variables CSS definidas en :root (Etapa 1) mediante clases canónicas
- *   de Tailwind con custom properties: bg-[--beige], text-[--ink].
- * - El contenido de las páginas se añadirá aquí en Etapas siguientes.
- */
 function App() {
-  // Datos oficiales de redes (también se usarán en la página "Sobre Mí")
+  // Datos oficiales de redes (se usan en HomePage y Footer).
+  // Mantén estos valores en un único lugar para coherencia y fácil actualización.
   const SOCIAL = {
     instagram: {
       url: "https://www.instagram.com/jhulyanafr?igsh=aHJ5ajJ0N3FwbzR5",
@@ -33,21 +29,17 @@ function App() {
   };
 
   return (
-    // Layout a pantalla completa: Header fijo, contenido flexible y Footer al final
+    // Layout a pantalla completa: columna con Header fijo arriba, contenido flexible y Footer al final.
     <div className="min-h-screen w-full flex flex-col bg-[--beige] text-[--ink]">
       {/* Cabecera global (sticky con blur y borde sutil) */}
       <Header />
 
-      {/* Contenido principal. Aquí montaremos las secciones de cada página:
-         - /  (Sobre Mí / Home)
-         - /colaboraciones
-         - /paquetes
-         Más adelante migraremos a <Routes> cuando activemos HashRouter. */}
-      <main id="content" className="flex-1">
-        {/* TODO (Etapas siguientes): insertar secciones/containers de cada página */}
-      </main>
+      {/* Página Home / Sobre Mí
+         - HomePage retorna su propio <main> con todas las secciones (Hero, Identidad, Redes, Bio, Audiencia, Estilo, Destaques, CTA).
+         - Le pasamos el objeto SOCIAL con URLs y seguidores para las social cards. */}
+      <HomePage social={SOCIAL} />
 
-      {/* Pie global: nombre desplazado y orden de iconos (TT-PT → IG → TT-ES) */}
+      {/* Pie global: orden de iconos (TT-PT → IG → TT-ES) y nombre desplazado */}
       <Footer
         instagramUrl={SOCIAL.instagram.url}
         tiktokPtUrl={SOCIAL.tiktokPt.url}
