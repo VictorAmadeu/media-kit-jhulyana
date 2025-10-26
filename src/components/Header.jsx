@@ -1,10 +1,11 @@
 // src/components/Header.jsx
 // Header global accesible y listo para producción.
 // - Sticky con blur y borde inferior sutil.
-// - Logo “JF” en círculo cereza (usa bg-[--cherry]).
+// - Logo “JF” en círculo cereza (corregido: bg-[var(--cherry)]).
 // - Menú con 3 enlaces (<a> por ahora; luego <Link> + HashRouter).
 // - Accesibilidad: aria-label en el logo, sr-only, y focus-visible rings.
-// - Variables CSS con sintaxis canónica Tailwind: text-[--cherry], ring-[--cherry], etc.
+// - Nota: en este proyecto algunas utilidades con variables CSS requieren el
+//   uso explícito de var(). Por eso ajustamos solo el logo.
 
 import React from "react";
 
@@ -20,7 +21,8 @@ export function Header() {
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         >
           <span
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-white font-display bg-[--cherry]"
+            /* FIX: usar var() para asegurar el color de fondo del círculo cereza */
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-white font-display bg-[var(--cherry)]"
             aria-hidden="true"
           >
             JF
