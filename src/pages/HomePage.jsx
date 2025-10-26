@@ -1,16 +1,13 @@
 // src/pages/HomePage.jsx
 // Página Home / Sobre Mí
-// 🔧 Corrección solicitada (SOLO ESTO):
-// - Se aumenta el ancho MÁXIMO del contenedor “tarjeta” **solo en pantallas grandes**,
-//   para que el contenido se vea más ancho pero **siga quedando margen/beige alrededor**.
-// - En móviles y tablets NO se modifica nada (se mantiene max-w-5xl).
+// 🔧 Corrección solicitada:
+// - Mostrar las 3 imágenes del HERO enteras, cuadradas y sin recorte.
+// - Para ello, cada celda del mosaico pasa de aspect-4/3 → aspect-square.
+// - Se mantiene gap-0 para NO dejar espacios en blanco entre imágenes.
+// - No se toca el height de las imágenes; al igualar contenedor (1:1) con fotos (1:1),
+//   object-cover no recorta y se ven completas.
 //
-// Implementación:
-// - Base:        max-w-5xl  (igual que antes; móviles/tablets se comportan igual)
-// - En XL:       xl:max-w-7xl  (~1280px)
-// - En 2XL:      2xl:max-w-[84rem]  (~1344px) → da un poco más de respiro en monitores grandes
-//
-// ❗ No se modifica ningún otro estilo/componente ni copy.
+// Nota: No se modifica ningún otro componente/estilo.
 
 import React from "react";
 import { Instagram } from "lucide-react";
@@ -26,9 +23,6 @@ import style2 from "../assets/jhulyana/home/hero-5.jpg";
 import style3 from "../assets/jhulyana/home/hero-6.jpg";
 
 // Tarjeta simple para redes (icon-only + valor)
-// Notas:
-// - Enlaces externos en MISMA pestaña (convención del proyecto).
-// - Usa currentColor en iconos para heredar color desde el contenedor.
 const SocialCard = ({ href, icon, label, value }) => (
   <a
     href={href}
@@ -65,18 +59,15 @@ export function HomePage({ social }) {
     <main className="font-body px-4 md:px-6">
       {/* 
         CONTENEDOR (tarjeta blanca)
-        🔧 Cambio clave: aumentar ancho máximo SOLO en pantallas grandes.
-        - mx-auto → centrado
-        - max-w-5xl → base (móvil/tablet igual que antes)
-        - xl:max-w-7xl y 2xl:max-w-[84rem] → más ancho en monitores grandes
-        - overflow-hidden → el HERO respeta esquinas redondeadas
-        - mt → deja ver el beige alrededor
+        - En pantallas grandes se amplía el ancho máximo para respirar.
       */}
       <div className="mx-auto mt-4 md:mt-6 max-w-5xl xl:max-w-7xl 2xl:max-w-[84rem] bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden">
-        {/* HERO — Mosaico 3 fotos */}
+        {/* HERO — Mosaico 3 fotos
+            🔧 FIX: hacer cada celda CUADRADA (aspect-square) y mantener gap-0
+            para que se vean enteras sin recorte y sin espacios en blanco. */}
         <section className="grid grid-cols-3 gap-0">
           {headerImages.map(({ src, alt }, i) => (
-            <div key={i} className="aspect-4/3 overflow-hidden">
+            <div key={i} className="aspect-square overflow-hidden">
               <img
                 src={src}
                 alt={alt}
