@@ -1,12 +1,14 @@
 // src/pages/HomePage.jsx
 // Página Home / Sobre Mí
 // 🔧 Corrección solicitada (SOLO ESTO):
-// - Se envuelve TODO el contenido de la página dentro de un contenedor
-//   tipo “tarjeta” blanca con bordes redondeados.
-// - El contenedor tiene overflow-hidden para que el HERO (mosaico de fotos)
-//   respete las esquinas redondeadas.
-// - El fondo beige ya lo provee el wrapper global (App.jsx). Al añadir
-//   margen superior, el beige se ve alrededor de la tarjeta.
+// - Se aumenta el ancho MÁXIMO del contenedor “tarjeta” **solo en pantallas grandes**,
+//   para que el contenido se vea más ancho pero **siga quedando margen/beige alrededor**.
+// - En móviles y tablets NO se modifica nada (se mantiene max-w-5xl).
+//
+// Implementación:
+// - Base:        max-w-5xl  (igual que antes; móviles/tablets se comportan igual)
+// - En XL:       xl:max-w-7xl  (~1280px)
+// - En 2XL:      2xl:max-w-[84rem]  (~1344px) → da un poco más de respiro en monitores grandes
 //
 // ❗ No se modifica ningún otro estilo/componente ni copy.
 
@@ -62,15 +64,15 @@ export function HomePage({ social }) {
   return (
     <main className="font-body px-4 md:px-6">
       {/* 
-        CONTENEDOR NUEVO (único cambio funcional):
-        - mx-auto + max-w-5xl → centrado y ancho controlado
-        - bg-white → “cuadrado” blanco
-        - rounded-3xl → bordes redondeados notables
-        - shadow-sm + ring-1 ring-black/5 → profundidad sutil
-        - overflow-hidden → recorta esquinas del HERO
-        - mt-4 md:mt-6 → deja ver el fondo beige alrededor
+        CONTENEDOR (tarjeta blanca)
+        🔧 Cambio clave: aumentar ancho máximo SOLO en pantallas grandes.
+        - mx-auto → centrado
+        - max-w-5xl → base (móvil/tablet igual que antes)
+        - xl:max-w-7xl y 2xl:max-w-[84rem] → más ancho en monitores grandes
+        - overflow-hidden → el HERO respeta esquinas redondeadas
+        - mt → deja ver el beige alrededor
       */}
-      <div className="mx-auto mt-4 md:mt-6 max-w-5xl bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden">
+      <div className="mx-auto mt-4 md:mt-6 max-w-5xl xl:max-w-7xl 2xl:max-w-[84rem] bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden">
         {/* HERO — Mosaico 3 fotos */}
         <section className="grid grid-cols-3 gap-0">
           {headerImages.map(({ src, alt }, i) => (
