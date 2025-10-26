@@ -1,9 +1,38 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* ------------------------------------------------------------------
+   App.css
+   🔧 FIX: Mostrar el fondo beige global alrededor de la “tarjeta” blanca.
+   - El template de Vite ponía a #root un max-width y un padding (2rem),
+     lo que hacía que alrededor se viera el fondo blanco del <body>.
+   - Quitamos esas restricciones y reseteamos márgenes para que el
+     wrapper con bg-[--beige] definido en App.jsx ocupe todo el viewport.
+------------------------------------------------------------------- */
+
+/* Aseguramos que html, body y #root ocupen el alto completo
+   y sin márgenes por defecto del navegador. */
+html, body, #root {
+  height: 100%;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ⚠️ Eliminamos los estilos de demo de Vite que estrechaban la app.
+   - Sin max-width ni padding → el fondo beige del wrapper (App.jsx)
+     se verá por los lados alrededor del contenedor blanco.
+   - text-align: initial → no forzamos centrado global; cada sección
+     ya maneja su alineación con Tailwind. */
+#root {
+  max-width: none;     /* antes: 1280px */
+  margin: 0;           /* antes: 0 auto (centraba todo el sitio) */
+  padding: 0;          /* antes: 2rem (mostraba franjas blancas) */
+  text-align: initial; /* antes: center */
+  background: transparent; /* el fondo lo gestiona App.jsx */
+}
+
+/* --- Resto de estilos de la plantilla (se mantienen por si
+       en algún momento se usan los componentes de demo) --- */
 
 .logo {
   height: 6em;
@@ -19,12 +48,8 @@
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -33,10 +58,6 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
+.card { padding: 2em; }
 
-.read-the-docs {
-  color: #888;
-}
+.read-the-docs { color: #888; }

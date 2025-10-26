@@ -4,8 +4,16 @@
 // - Renderiza la página Home (Sobre Mí) completa mediante <HomePage />.
 // - Semántica: evitamos anidar <main> aquí porque HomePage ya expone su propio <main>.
 // - Branding: fondo beige y texto ink vía custom properties con sintaxis canónica Tailwind.
+//
+// 🔧 FIX visible (único cambio necesario):
+//    Importamos "App.css" para que se apliquen los resets del template de Vite:
+//    - eliminar padding/margen/max-width de #root
+//    - asegurar html/body/#root a 100% de alto
+//    Con esto, el wrapper con bg-[--beige] definido aquí ocupa toda la pantalla
+//    y se ve el color beige alrededor del contenedor blanco de la primera página.
 
 import React from "react";
+import "./App.css"; // ← IMPORTANTE: activa el fondo beige alrededor del contenedor blanco
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { HomePage } from "./pages/HomePage";
@@ -30,13 +38,12 @@ function App() {
 
   return (
     // Layout a pantalla completa: columna con Header fijo arriba, contenido flexible y Footer al final.
+    // bg-[--beige] es el fondo crema global que debe verse alrededor de la “tarjeta” blanca de HomePage.
     <div className="min-h-screen w-full flex flex-col bg-[--beige] text-[--ink]">
       {/* Cabecera global (sticky con blur y borde sutil) */}
       <Header />
 
-      {/* Página Home / Sobre Mí
-         - HomePage retorna su propio <main> con todas las secciones (Hero, Identidad, Redes, Bio, Audiencia, Estilo, Destaques, CTA).
-         - Le pasamos el objeto SOCIAL con URLs y seguidores para las social cards. */}
+      {/* Página Home / Sobre Mí */}
       <HomePage social={SOCIAL} />
 
       {/* Pie global: orden de iconos (TT-PT → IG → TT-ES) y nombre desplazado */}
