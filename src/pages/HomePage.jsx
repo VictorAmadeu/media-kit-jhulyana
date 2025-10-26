@@ -1,13 +1,13 @@
 // src/pages/HomePage.jsx
 // Página Home / Sobre Mí
-// 🔧 Corrección solicitada:
-// - Mostrar las 3 imágenes del HERO enteras, cuadradas y sin recorte.
-// - Para ello, cada celda del mosaico pasa de aspect-4/3 → aspect-square.
-// - Se mantiene gap-0 para NO dejar espacios en blanco entre imágenes.
-// - No se toca el height de las imágenes; al igualar contenedor (1:1) con fotos (1:1),
-//   object-cover no recorta y se ven completas.
+// 🔧 Corrección solicitada (AÚN MÁS FINO):
+// - Mantener las 3 imágenes del HERO cuadradas y sin espacios en blanco (gap-0).
+// - Ajustar el anclaje del recorte para que se vean los PIES de Jhulyana:
+//   → añadimos `object-bottom` en las <img> del mosaico.
+//   Con `object-cover object-bottom` llenamos la celda sin bordes blancos
+//   y priorizamos mostrar la parte inferior de la foto (los pies).
 //
-// Nota: No se modifica ningún otro componente/estilo.
+// ❗ No se toca ningún otro componente/estilo ni el tamaño de los contenedores.
 
 import React from "react";
 import { Instagram } from "lucide-react";
@@ -57,21 +57,18 @@ export function HomePage({ social }) {
 
   return (
     <main className="font-body px-4 md:px-6">
-      {/* 
-        CONTENEDOR (tarjeta blanca)
-        - En pantallas grandes se amplía el ancho máximo para respirar.
-      */}
+      {/* CONTENEDOR (tarjeta blanca) */}
       <div className="mx-auto mt-4 md:mt-6 max-w-5xl xl:max-w-7xl 2xl:max-w-[84rem] bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden">
         {/* HERO — Mosaico 3 fotos
-            🔧 FIX: hacer cada celda CUADRADA (aspect-square) y mantener gap-0
-            para que se vean enteras sin recorte y sin espacios en blanco. */}
+            - Celdas cuadradas y sin espacios en blanco (gap-0).
+            - `object-bottom` garantiza que se vea la parte inferior (pies). */}
         <section className="grid grid-cols-3 gap-0">
           {headerImages.map(({ src, alt }, i) => (
             <div key={i} className="aspect-square overflow-hidden">
               <img
                 src={src}
                 alt={alt}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-bottom"
                 loading="lazy"
                 decoding="async"
                 sizes="(max-width: 768px) 33vw, 33vw"
@@ -234,7 +231,7 @@ export function HomePage({ social }) {
                     <img
                       src={src}
                       alt={`Mi estilo ${i + 1}`}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover object-bottom"
                       loading="lazy"
                       decoding="async"
                       sizes="(max-width: 768px) 33vw, 33vw"
