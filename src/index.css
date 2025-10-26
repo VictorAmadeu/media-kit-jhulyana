@@ -36,7 +36,7 @@
 
     /* Colores base del sitio */
     color: var(--ink);
-    background: #ffffff; /* usa var(--beige) si quieres un look crema por defecto */
+    background: var(--beige);
     min-width: 320px;
   }
 
