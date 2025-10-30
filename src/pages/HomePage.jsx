@@ -1,13 +1,11 @@
 // src/pages/HomePage.jsx
 // Página Home / Sobre Mí
-// 🔧 Corrección solicitada (AÚN MÁS FINO):
-// - Mantener las 3 imágenes del HERO cuadradas y sin espacios en blanco (gap-0).
-// - Ajustar el anclaje del recorte para que se vean los PIES de Jhulyana:
-//   → añadimos `object-bottom` en las <img> del mosaico.
-//   Con `object-cover object-bottom` llenamos la celda sin bordes blancos
-//   y priorizamos mostrar la parte inferior de la foto (los pies).
 //
-// ❗ No se toca ningún otro componente/estilo ni el tamaño de los contenedores.
+// 🔧 Corrección solicitada: COLORES en 3 líneas de la identidad (bajo el HERO)
+//  - “Jhulyana Ferreira”  → color var(--cherry)
+//  - “Lifestyle, beauty and fashion” → color var(--muted)
+//  - Texto del hashtag “#ARMARIOSINPANTALONES” → color var(--cherry)
+//  (No se toca nada más)
 
 import React from "react";
 import { Instagram } from "lucide-react";
@@ -59,9 +57,7 @@ export function HomePage({ social }) {
     <main className="font-body px-4 md:px-6">
       {/* CONTENEDOR (tarjeta blanca) */}
       <div className="mx-auto mt-4 md:mt-6 max-w-5xl xl:max-w-7xl 2xl:max-w-[84rem] bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden">
-        {/* HERO — Mosaico 3 fotos
-            - Celdas cuadradas y sin espacios en blanco (gap-0).
-            - `object-bottom` garantiza que se vea la parte inferior (pies). */}
+        {/* HERO — Mosaico 3 fotos */}
         <section className="grid grid-cols-3 gap-0">
           {headerImages.map(({ src, alt }, i) => (
             <div key={i} className="aspect-square overflow-hidden">
@@ -77,23 +73,37 @@ export function HomePage({ social }) {
           ))}
         </section>
 
-        {/* Identidad */}
+        {/* Identidad — SOLO los 4 elementos (colores corregidos en 3 líneas) */}
         <section className="bg-white text-center py-8 px-6 shadow-sm">
-          <h1 className="font-display text-4xl md:text-5xl tracking-tight text-[--cherry]">
+          {/* 1) Nombre — forzamos color cereza con var(--cherry) */}
+          <h1
+            className="font-display font-bold text-5xl md:text-6xl leading-tight"
+            style={{ color: "var(--cherry)" }} // ✅ corrección de color
+          >
             Jhulyana Ferreira
           </h1>
-          <p className="text-[--muted] text-base md:text-lg mt-2">
+
+          {/* 2) Tagline — forzamos gris muted con var(--muted) */}
+          <p
+            className="mt-2 text-lg md:text-xl font-medium tracking-wide"
+            style={{ color: "var(--muted)" }} // ✅ corrección de color
+          >
             Lifestyle, beauty and fashion
           </p>
-          <p className="text-[--ink] text-sm md:text-base mt-1">
+
+          {/* 3) Subtagline (se mantiene igual, no solicitado) */}
+          <p className="mt-1 text-[--ink] text-base md:text-lg font-medium">
             Brasileña en Madrid <span className="hidden sm:inline">|</span>{" "}
             Especialista en Estilo y Cachos
           </p>
 
-          {/* Hashtag en badge */}
-          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[--cherry] px-3 py-1 text-sm">
+          {/* 4) Hashtag (badge) — solo el TEXTO del hashtag cambia a cereza */}
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[--cherry] px-4 py-2 text-sm shadow-sm">
             <span className="inline-block h-2 w-2 rounded-full bg-[--cherry]" />
-            <span className="font-display text-[--cherry]">
+            <span
+              className="uppercase font-semibold tracking-wide"
+              style={{ color: "var(--cherry)" }} // ✅ corrección de color (texto del hashtag)
+            >
               #ARMARIOSINPANTALONES
             </span>
           </div>
@@ -126,7 +136,7 @@ export function HomePage({ social }) {
         {/* Sobre mí + Audiencia + Estilo + Destaques */}
         <section className="px-6 md:px-10 py-8">
           <div className="grid md:grid-cols-[2fr_3fr] gap-8">
-            {/* Sobre mí (columna izquierda) */}
+            {/* Sobre mí */}
             <div>
               <h2 className="font-display text-xl text-center text-[--cherry]">
                 Sobre mí
