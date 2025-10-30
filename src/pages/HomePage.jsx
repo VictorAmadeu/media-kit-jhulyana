@@ -8,7 +8,13 @@
 //  (No se toca nada más)
 
 import React from "react";
-import { Instagram } from "lucide-react";
+import {
+  Instagram,
+  MapPin,
+  MessageCircle,
+  UserRound,
+  Venus,
+} from "lucide-react";
 import { TikTokIcon } from "../components/icons/TikTokIcon";
 
 // Importa tus fotos locales (ajusta nombres si cambian)
@@ -41,7 +47,7 @@ const SocialCard = ({ href, icon, label, value }) => (
 // Tarjeta de estadística (no clicable)
 const Stat = ({ icon, label, value }) => (
   <div className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm">
-    <div className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[--beige] text-[--cherry]">
+    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[--beige] text-[--cherry]">
       {icon}
     </div>
     <div className="mt-2 text-base font-semibold">{value}</div>
@@ -176,61 +182,23 @@ export function HomePage({ social }) {
               </h2>
               <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <Stat
-                  icon={
-                    <svg
-                      className="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                    </svg>
-                  }
+                  icon={<UserRound className="h-6 w-6" aria-hidden="true" />}
                   label="Seguidores"
                   value="61k+"
                 />
                 <Stat
-                  icon={
-                    <svg
-                      className="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 2v20M2 12h20" />
-                    </svg>
-                  }
+                  icon={<MapPin className="h-6 w-6" aria-hidden="true" />}
                   label="Localización"
                   value="70% ES / 30% BR"
                 />
                 <Stat
-                  icon={
-                    <svg
-                      className="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 2a7 7 0 100 14 7 7 0 000-14z" />
-                    </svg>
-                  }
+                  icon={<Venus className="h-6 w-6" aria-hidden="true" />}
                   label="Género"
                   value="90% Mujeres"
                 />
                 <Stat
                   icon={
-                    <svg
-                      className="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      aria-hidden="true"
-                    >
-                      <polyline points="4 13 9 18 20 7" />
-                    </svg>
+                    <MessageCircle className="h-6 w-6" aria-hidden="true" />
                   }
                   label="Engagement"
                   value="[tasa media]"
