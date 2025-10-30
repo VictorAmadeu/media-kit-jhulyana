@@ -229,31 +229,30 @@ export function HomePage({ social }) {
                   </div>
                 ))}
               </div>
-
-              {/* Destaques */}
-              <div className="md:col-span-2 flex justify-center">
-                <div className="mt-8 w-full max-w-3xl rounded-2xl border border-black/5 bg-white px-8 py-6 text-center shadow-md">
-                  <h3 className="font-display text-2xl font-semibold tracking-wide text-[#d11c6b]">
-                    Destaques
-                  </h3>
-                  <ul className="mt-4 space-y-3 text-left text-base md:text-lg">
-                    {[
-                      "Comunidad fiel y de alto engagement",
-                      "Nicho: estilo femenino y cuidado de cabello rizado",
-                      "Contenido bilingüe (ES/PT) para mayor alcance",
-                      "Viralización orgánica con +[número] de views",
-                    ].map((txt, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 font-medium text-[#2f2f37]"
-                      >
-                        <span className="mt-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[#d11c6b]" />
-                        {txt}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+            </div>
+          </div>
+          {/* Destaques */}
+          <div className="mt-8 flex justify-center">
+            <div className="w-full max-w-3xl rounded-2xl border border-black/5 bg-white px-8 py-6 text-center shadow-md">
+              <h3 className="font-display text-2xl font-semibold tracking-wide text-[#d11c6b]">
+                Destaques
+              </h3>
+              <ul className="mt-4 space-y-3 text-left text-base md:text-lg">
+                {[
+                  "Comunidad fiel y de alto engagement",
+                  "Nicho único: estilo femenino y cuidado de cabello rizado",
+                  "Contenido bilingüe (ES/PT) para mayor alcance",
+                  "Viralización orgánica con +[número] de views",
+                ].map((txt, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 font-medium text-[#2f2f37]"
+                  >
+                    <span className="mt-1.5 inline-block h-2.5 w-2.5 rounded-full bg-[#d11c6b]" />
+                    {txt}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
