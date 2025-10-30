@@ -36,7 +36,7 @@ const circleLinkClasses =
             className={circleLinkClasses}
             // Sin target="_blank": abrir en la MISMA pestaña (convención del proyecto)
           >
-            <TikTokIcon className="h-5 w-5 text-[--cherry] transition-colors group-hover:text-white group-focus-visible:text-white" />
+            <TikTokIcon className="h-5 w-5 text-[var(--cherry)] transition-colors group-hover:text-white group-focus-visible:text-white" />
           </a>
 
           {/* Instagram */}
@@ -46,7 +46,7 @@ const circleLinkClasses =
             className={circleLinkClasses}
           >
             <Instagram
-              className="h-5 w-5 text-[--cherry] transition-colors group-hover:text-white group-focus-visible:text-white"
+              className="h-5 w-5 text-[var(--cherry)] transition-colors group-hover:text-white group-focus-visible:text-white"
               aria-hidden="true"
             />
           </a>
@@ -57,7 +57,7 @@ const circleLinkClasses =
             aria-label="TikTok (Español)"
             className={circleLinkClasses}
           >
-            <TikTokIcon className="h-5 w-5 text-[--cherry] transition-colors group-hover:text-white group-focus-visible:text-white" />
+            <TikTokIcon className="h-5 w-5 text-[var(--cherry)] transition-colors group-hover:text-white group-focus-visible:text-white" />
           </a>
         </div>
       </div>
