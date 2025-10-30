@@ -275,10 +275,12 @@ export function HomePage({ social }) {
               <path d="M4 4h16v16H4z" />
             </svg>
           </a>
-          <p className="text-sm text-[--muted]">
+          <p className="text-sm" style={{ color: "var(--muted)" }}>
             ¿Interesado en una colaboración personalizada? ¡Hablemos!
           </p>
-          <p className="text-xs text-[--muted]">TikTok e Instagram arriba</p>
+          <p className="text-xs" style={{ color: "var(--muted)" }}>
+            TikTok e Instagram arriba
+          </p>
         </div>
       </div>
     </main>
