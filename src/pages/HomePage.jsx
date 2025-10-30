@@ -27,7 +27,10 @@ const SocialCard = ({ href, icon, label, value }) => (
     aria-label={label}
     className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm hover:bg-[--cherry] hover:text-white transition"
   >
-    <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[--beige] text-[--cherry]">
+    <div
+      className="mx-auto flex h-10 w-10 items-center justify-center rounded-full"
+      style={{ backgroundColor: "var(--beige)", color: "var(--cherry)" }}
+    >
       {icon}
     </div>
     <div className="mt-2 text-base font-semibold">{value}</div>
