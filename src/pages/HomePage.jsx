@@ -141,7 +141,10 @@ export function HomePage({ social }) {
           <div className="grid md:grid-cols-[2fr_3fr] gap-8">
             {/* Sobre mí */}
             <div>
-              <h2 className="font-display text-xl text-center text-[--cherry]">
+              <h2
+                className="font-display text-xl text-center"
+                style={{ color: "var(--cherry)" }}
+              >
                 Sobre mí
               </h2>
               <p className="mt-2 text-sm md:text-base leading-relaxed">
@@ -165,7 +168,10 @@ export function HomePage({ social }) {
             {/* Derecha: Audiencia + Estilo + Destaques */}
             <div>
               {/* Audiencia */}
-              <h2 className="font-display text-xl text-center text-[--cherry]">
+              <h2
+                className="font-display text-xl text-center"
+                style={{ color: "var(--cherry)" }}
+              >
                 Mi audiencia
               </h2>
               <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
