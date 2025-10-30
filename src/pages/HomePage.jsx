@@ -47,7 +47,10 @@ const SocialCard = ({ href, icon, label, value }) => (
 // Tarjeta de estadística (no clicable)
 const Stat = ({ icon, label, value }) => (
   <div className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm">
-    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[--beige] text-[--cherry]">
+    <div
+      className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
+      style={{ backgroundColor: "var(--beige)", color: "var(--cherry)" }}
+    >
       {icon}
     </div>
     <div className="mt-2 text-base font-semibold">{value}</div>
