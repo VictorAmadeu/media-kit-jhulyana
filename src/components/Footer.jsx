@@ -17,6 +17,10 @@ import { TikTokIcon } from "./icons/TikTokIcon"; // icono centralizado
  * @param {string} tiktokEsUrl  - URL del TikTok (ES)
  */
 export function Footer({ instagramUrl, tiktokPtUrl, tiktokEsUrl }) {
+  const circleLinkClasses =
+    "group inline-flex size-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] shadow-[0_0_0_1px_rgba(15,23,42,0.08)] transition " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white " +
+    "hover:bg-[--cherry] hover:text-white hover:no-underline focus-visible:no-underline";
   return (
     <footer className="mt-10 border-t border-black/5 bg-white">
       <div className="mx-auto max-w-5xl px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-body">
@@ -29,9 +33,7 @@ export function Footer({ instagramUrl, tiktokPtUrl, tiktokEsUrl }) {
           <a
             href={tiktokPtUrl}
             aria-label="TikTok (Portugués)"
-            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] transition
-                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                       hover:bg-[--cherry] hover:text-white"
+            className={circleLinkClasses}
             // Sin target="_blank": abrir en la MISMA pestaña (convención del proyecto)
           >
             <TikTokIcon className="h-5 w-5" />
@@ -41,9 +43,7 @@ export function Footer({ instagramUrl, tiktokPtUrl, tiktokEsUrl }) {
           <a
             href={instagramUrl}
             aria-label="Instagram"
-            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] transition
-                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                       hover:bg-[--cherry] hover:text-white"
+            className={circleLinkClasses}
           >
             <Instagram className="h-5 w-5" aria-hidden="true" />
           </a>
@@ -52,9 +52,7 @@ export function Footer({ instagramUrl, tiktokPtUrl, tiktokEsUrl }) {
           <a
             href={tiktokEsUrl}
             aria-label="TikTok (Español)"
-            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] transition
-                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                       hover:bg-[--cherry] hover:text-white"
+            className={circleLinkClasses}
           >
             <TikTokIcon className="h-5 w-5" />
           </a>
