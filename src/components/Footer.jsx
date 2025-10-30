@@ -18,6 +18,10 @@ import { TikTokIcon } from "./icons/TikTokIcon"; // icono centralizado
  */
 export function Footer({ instagramUrl, tiktokPtUrl, tiktokEsUrl }) {
   const circleLinkClasses =
+    "group inline-flex size-12 items-center justify-center rounded-full bg-[--stone] text-[--cherry] shadow-[0_0_0_1px_rgba(15,23,42,0.08)] transition " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white " +
+    "hover:bg-[--cherry] hover:text-white hover:no-underline focus-visible:no-underline";
+  const circleLinkClasses =
     "group inline-flex size-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] shadow-[0_0_0_1px_rgba(15,23,42,0.08)] transition " +
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white " +
     "hover:bg-[--cherry] hover:text-white hover:no-underline focus-visible:no-underline";
