@@ -29,40 +29,34 @@ export function Footer({ instagramUrl, tiktokPtUrl, tiktokEsUrl }) {
           <a
             href={tiktokPtUrl}
             aria-label="TikTok (Portugués)"
-            className="group inline-flex h-10 w-10 items-center justify-center rounded-full bg-[--stone] transition
+            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] transition
                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                       hover:bg-[--cherry]"
+                       hover:bg-[--cherry] hover:text-white"
             // Sin target="_blank": abrir en la MISMA pestaña (convención del proyecto)
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full text-[--cherry] group-hover:text-white">
-              <TikTokIcon className="h-5 w-5" />
-            </span>
+            <TikTokIcon className="h-5 w-5" />
           </a>
 
           {/* Instagram */}
           <a
             href={instagramUrl}
             aria-label="Instagram"
-            className="group inline-flex h-10 w-10 items-center justify-center rounded-full bg-[--stone] transition
+            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] transition
                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                       hover:bg-[--cherry]"
+                       hover:bg-[--cherry] hover:text-white"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full text-[--cherry] group-hover:text-white">
-              <Instagram className="h-5 w-5" aria-hidden="true" />
-            </span>
+            <Instagram className="h-5 w-5" aria-hidden="true" />
           </a>
 
           {/* TikTok ES */}
           <a
             href={tiktokEsUrl}
             aria-label="TikTok (Español)"
-            className="group inline-flex h-10 w-10 items-center justify-center rounded-full bg-[--stone] transition
+            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] transition
                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white
-                       hover:bg-[--cherry]"
+                       hover:bg-[--cherry] hover:text-white"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full text-[--cherry] group-hover:text-white">
-              <TikTokIcon className="h-5 w-5" />
-            </span>
+            <TikTokIcon className="h-5 w-5" />
           </a>
         </div>
       </div>
