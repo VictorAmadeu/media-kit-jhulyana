@@ -17,14 +17,10 @@ import { TikTokIcon } from "./icons/TikTokIcon"; // icono centralizado
  * @param {string} tiktokEsUrl  - URL del TikTok (ES)
  */
 export function Footer({ instagramUrl, tiktokPtUrl, tiktokEsUrl }) {
-  const circleLinkClasses =
-    "group inline-flex size-12 items-center justify-center rounded-full bg-[--stone] text-[--cherry] shadow-[0_0_0_1px_rgba(15,23,42,0.08)] transition " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white " +
-    "hover:bg-[--cherry] hover:text-white hover:no-underline focus-visible:no-underline";
-  const circleLinkClasses =
-    "group inline-flex size-12 items-center justify-center rounded-full bg-[--stone] text-[--ink] shadow-[0_0_0_1px_rgba(15,23,42,0.08)] transition " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white " +
-    "hover:bg-[--cherry] hover:text-white hover:no-underline focus-visible:no-underline";
+const circleLinkClasses =
+  "group inline-flex size-12 items-center justify-center rounded-full bg-[--stone] text-[--cherry] shadow-[0_0_0_1px_rgba(15,23,42,0.08)] transition " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white " +
+  "hover:bg-[--cherry] hover:text-white hover:no-underline focus-visible:no-underline";  
   return (
     <footer className="mt-10 border-t border-black/5 bg-white">
       <div className="mx-auto max-w-5xl px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-body">
