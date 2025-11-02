@@ -81,6 +81,7 @@ export function ColaborationsPage() {
   const COLABS = [
     {
       handle: "@shop.soller",
+      url: "https://www.instagram.com/p/C07Mo2NtnjR/?igsh=MTJwOGZ2ZXBkbTY2eQ==",
       photo: shopSollerPhoto,
       insights: shopSollerInsights,
       altPhoto: "Publicación de Jhulyana con Shop Soller (mock-up iPhone).",
@@ -88,6 +89,7 @@ export function ColaborationsPage() {
     },
     {
       handle: "@natura.europe",
+      url: "https://www.instagram.com/p/DQXr4X9CEUp/?igsh=bjdrczhqM3RyMjg0",
       photo: naturaeuropePhoto,
       insights: naturaeuropeInsights,
       altPhoto: "Publicación de Jhulyana para Natura Europe (mock-up iPhone).",
@@ -95,6 +97,7 @@ export function ColaborationsPage() {
     },
     {
       handle: "@thaisrodrigues",
+      url: "https://www.instagram.com/p/C_JOLz3t-I8/?igsh=MWZka3FvODMzbWRrNQ==",
       photo: thaisPhoto,
       insights: thaisInsights,
       altPhoto: "Publicación de Jhulyana con Thais Rodrigues (mock-up iPhone).",
@@ -132,7 +135,14 @@ export function ColaborationsPage() {
               className="text-base md:text-lg text-center mb-2"
               style={{ color: "var(--muted)" }}
             >
-              {c.handle}
+              <a
+                href={c.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="hover:underline focus-visible:underline outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--muted)] rounded"
+              >
+                {c.handle}
+              </a>
             </p>
 
             <IPhoneMock src={c.photo} alt={c.altPhoto} />
