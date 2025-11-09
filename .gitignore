@@ -4,6 +4,11 @@
 # IMPORTANTE: NO ignorar /docs porque se usa para GitHub Pages
 # ---------------------------------------------------------
 
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
 # OS junk
 .DS_Store
 Thumbs.db
