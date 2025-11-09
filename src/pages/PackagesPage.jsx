@@ -187,7 +187,10 @@ export function PackagesPage() {
             className="relative rounded-2xl bg-white ring-1 ring-black/5 shadow-sm p-6 flex flex-col"
           >
             <header className="text-center">
-              <h3 className="font-body text-xs tracking-[0.12em] font-semibold text-[--muted]">
+              <h3
+                className="font-body text-xs tracking-[0.12em] font-semibold"
+                style={{ color: "var(--muted)" }}
+              >
                 {pkg.subtitle}
               </h3>
               <h4 className="mt-1 font-display text-xl text-[--ink]">
@@ -211,7 +214,10 @@ export function PackagesPage() {
             <ul className="mt-4 space-y-2 text-sm text-[--ink]">
               {pkg.items.map((item) => (
                 <li key={item} className="flex items-start gap-2">
-                  <Check className="h-4 w-4 mt-0.5 text-[--cherry]" />
+                  <Check
+                    className="h-4 w-4 mt-0.5"
+                    style={{ color: "var(--cherry)" }}
+                  />
                   <span>{item}</span>
                 </li>
               ))}
