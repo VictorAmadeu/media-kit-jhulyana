@@ -242,7 +242,7 @@ export function HomePage({ social }) {
                   "Comunidad fiel y de alto engagement",
                   "Nicho único: estilo femenino y cuidado de cabello rizado",
                   "Contenido bilingüe (ES/PT) para mayor alcance",
-                  "Viralización orgánica con +[número] de views",
+                  "12-15mil visualizaciones orgánicas diarias en stories",
                 ].map((txt, i) => (
                   <li
                     key={i}
