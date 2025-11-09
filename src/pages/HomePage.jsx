@@ -204,7 +204,7 @@ export function HomePage({ social }) {
                     <MessageCircle className="h-6 w-6" aria-hidden="true" />
                   }
                   label="Engagement"
-                  value="[tasa media]"
+                  value="8,9%"
                 />
               </div>
 
@@ -279,7 +279,7 @@ export function HomePage({ social }) {
             ¿Interesado en una colaboración personalizada? ¡Hablemos!
           </p>
           <p className="text-xs" style={{ color: "var(--muted)" }}>
-            TikTok e Instagram arriba
+            Mis redes sociales están disponibles aquí.
           </p>
         </div>
       </div>
