@@ -58,19 +58,47 @@ const resolveEnvValue = (key) => {
 // ───────────────────────────── Supabase Client ───────────────────────────────
 // Nota: sustituye las constantes por valores reales en producción o inyecta los
 // datos desde window._SUPABASE_URL y window._SUPABASE_ANON_KEY.
-const SUPABASE_URL =
-  resolveEnvValue("__SUPABASE_URL") ||
-  resolveEnvValue("VITE_SUPABASE_URL") ||
-  resolveEnvValue("NEXT_PUBLIC_SUPABASE_URL") ||
-  "https://YOUR-PROJECT.supabase.co"; // ← Reemplazar en despliegue
+const resolveSupabaseSetting = (candidates, fallback) => {
+  for (const key of candidates) {
+    const value = resolveEnvValue(key);
+    if (typeof value === "string" && value.trim() !== "") {
+      return value.trim();
+    }
+  }
+  return fallback;
+};
 
-const SUPABASE_ANON_KEY =
-  resolveEnvValue("__SUPABASE_ANON_KEY") ||
-  resolveEnvValue("VITE_SUPABASE_ANON_KEY") ||
-  resolveEnvValue("NEXT_PUBLIC_SUPABASE_ANON_KEY") ||
-  "YOUR-ANON-KEY"; // ← Reemplazar en despliegue
+const SUPABASE_URL = resolveSupabaseSetting(
+  [
+    "__SUPABASE_URL",
+    "VITE_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "REACT_APP_SUPABASE_URL",
+    "SUPABASE_URL",
+  ],
+  null
+);
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const SUPABASE_ANON_KEY = resolveSupabaseSetting(
+  [
+    "__SUPABASE_ANON_KEY",
+    "VITE_SUPABASE_ANON_KEY",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "REACT_APP_SUPABASE_ANON_KEY",
+    "SUPABASE_ANON_KEY",
+  ],
+  null
+);
+
+const isSupabaseConfigured =
+  typeof SUPABASE_URL === "string" &&
+  !SUPABASE_URL.includes("YOUR-PROJECT") &&
+  typeof SUPABASE_ANON_KEY === "string" &&
+  SUPABASE_ANON_KEY !== "YOUR-ANON-KEY";
+
+const supabase = isSupabaseConfigured
+  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
 
 // ───────────────────────────── Datos de la página ────────────────────────────
 // Paquetes y servicios adicionales en arrays inmutables. Mantener texto y orden
@@ -170,6 +198,15 @@ export function PackagesPage() {
 
   // Envía la propuesta a Supabase. Devuelve true si todo fue bien.
   const submitToSupabase = async (payload) => {
+     if (!supabase) {
+       console.error(
+         "Supabase no está configurado. Revisa las variables de entorno expuestas al navegador."
+       );
+       setErrorMsg(
+         "Servicio de almacenamiento no configurado. Contacta con el equipo técnico."
+       );
+       return false;
+     }
     setErrorMsg(null);
     setOkMsg(null);
     setLoading(true);
