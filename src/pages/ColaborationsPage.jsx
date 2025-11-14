@@ -3,7 +3,9 @@
 
 import React, { useEffect } from "react";
 
-// 🖼️ Imports locales (6 imágenes)
+// Imports locales de las imágenes utilizadas en la página:
+// - Fotos del mock-up en iPhone.
+// - Capturas de insights de cada colaboración.
 import shopSollerPhoto from "../assets/jhulyana/colaboraciones/shop-soller.jpg";
 import shopSollerInsights from "../assets/jhulyana/colaboraciones/shop-soller-insights.jpg";
 import naturaeuropePhoto from "../assets/jhulyana/colaboraciones/naturaeurope.jpg";
@@ -12,6 +14,7 @@ import thaisPhoto from "../assets/jhulyana/colaboraciones/thaisrodrigues.jpg";
 import thaisInsights from "../assets/jhulyana/colaboraciones/thaisrodrigues-insights.jpg";
 
 // Mock-up de iPhone (ratio 9:19 usando aspect-9/19)
+// Muestra la publicación dentro de un marco que simula un iPhone.
 function IPhoneMock({ src, alt }) {
   return (
     <div
@@ -43,6 +46,7 @@ function IPhoneMock({ src, alt }) {
  * - En móvil: object-contain para ver la imagen completa.
  * - En md+: object-cover para mantener el look lleno.
  * - Lupa: hover (desktop), active (móvil) y focus-visible (teclado).
+ * - Microinteracción extra: sombra suave al hacer zoom (hover/focus).
  */
 function InsightCard({ src, alt }) {
   return (
@@ -61,6 +65,7 @@ function InsightCard({ src, alt }) {
           group-hover:scale-110          /* lupa en desktop */
           active:scale-110               /* lupa al tocar en móvil */
           focus-visible:scale-110        /* lupa con teclado */
+          group-hover:shadow-lg focus-visible:shadow-lg /* sombra sutil al interactuar */
           cursor-zoom-in select-none
         "
       />
@@ -68,7 +73,10 @@ function InsightCard({ src, alt }) {
   );
 }
 
+// Componente principal de la página de colaboraciones.
+// Muestra 3 colaboraciones con enlace, mock-up y tarjeta de insights.
 export function ColaborationsPage() {
+  // Configuración estática de las colaboraciones mostradas.
   const COLABS = [
     {
       handle: "@shop.soller",
@@ -96,8 +104,10 @@ export function ColaborationsPage() {
     },
   ];
 
-  // Tests mínimos en desarrollo para asegurar datos de colaboraciones
+  // Tests mínimos en desarrollo para asegurar datos de colaboraciones.
+  // Solo se ejecutan en entorno de navegador y modo desarrollo.
   useEffect(() => {
+    if (typeof window === "undefined") return;
     if (import.meta.env.DEV) {
       console.group("ColaborationsPage::checks");
       console.assert(COLABS.length === 3, "Deben existir 3 colaboraciones");
@@ -111,6 +121,7 @@ export function ColaborationsPage() {
 
   return (
     <main className="font-body max-w-5xl mx-auto px-6 py-8">
+      {/* Título principal de la sección de colaboraciones */}
       <h2
         className="font-display text-2xl md:text-3xl text-center mb-6"
         style={{ color: "var(--cherry)" }}
@@ -118,10 +129,11 @@ export function ColaborationsPage() {
         Colaboraciones con Marcas
       </h2>
 
-      {/* 1 columna (móvil) → 3 columnas (desktop) */}
+      {/* Grid responsivo: 1 columna en móvil → 3 columnas en desktop */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
         {COLABS.map((c) => (
           <article key={c.handle} className="w-full">
+            {/* Nombre/handle de la marca con enlace al post original */}
             <p
               className="text-base md:text-lg text-center mb-2"
               style={{ color: "var(--muted)" }}
@@ -136,7 +148,10 @@ export function ColaborationsPage() {
               </a>
             </p>
 
+            {/* Mock-up de la publicación en un iPhone */}
             <IPhoneMock src={c.photo} alt={c.altPhoto} />
+
+            {/* Tarjeta de insights con microinteracción de zoom + sombra */}
             <InsightCard src={c.insights} alt={c.altInsights} />
           </article>
         ))}
