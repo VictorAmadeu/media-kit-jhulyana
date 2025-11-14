@@ -2,7 +2,8 @@
 // Página 3 — Paquetes
 // -----------------------------------------------------------------------------
 // Objetivo: mostrar los paquetes de colaboración y un formulario de contacto
-// conectado a Supabase para recibir propuestas de marcas con validación básica.
+// conectado a Supabase para recibir propuestas de marcas con validación básica
+// y toasts de feedback en el envío del formulario.
 // -----------------------------------------------------------------------------
 
 import React, { useEffect, useMemo, useState } from "react";
@@ -10,6 +11,8 @@ import { Check, Loader2, Mail } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 // Componente de input con icono y validación visual.
 import { FormInput } from "../components/FormInput";
+// Toast para feedback visual del envío (éxito / error).
+import { Toast } from "../components/Toast";
 
 // ───────────────────────────── Supabase Client ───────────────────────────────
 // URL y clave pública de Supabase (se leen desde variables de entorno Vite).
@@ -91,16 +94,17 @@ const EMPTY_FORM = {
 
 // Componente principal de la página de paquetes.
 export function PackagesPage() {
-  // Estado para controlar el envío del formulario (loading y mensajes globales).
+  // Estado para controlar el envío del formulario (loading).
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [okMsg, setOkMsg] = useState(null);
 
   // Valores del formulario controlado.
   const [formValues, setFormValues] = useState(EMPTY_FORM);
 
   // Errores por campo (para mostrar mensajes en línea).
   const [formErrors, setFormErrors] = useState({});
+
+  // Estado del toast global: message + type ("success" | "error"), o null si está oculto.
+  const [toast, setToast] = useState(null);
 
   // Comprueba una vez si todas las URLs sociales están definidas.
   const hasSocialLinks = useMemo(
@@ -135,7 +139,7 @@ export function PackagesPage() {
     // Actualizamos el valor del campo correspondiente.
     setFormValues((vals) => ({ ...vals, [name]: value }));
 
-    // Validación simple por campo.
+    // Validación simple por campo (nombre, email, mensaje).
     setFormErrors((errs) => {
       const next = { ...errs };
 
@@ -165,14 +169,17 @@ export function PackagesPage() {
       console.error(
         "Supabase no está configurado. Revisa las variables de entorno expuestas al navegador."
       );
-      setErrorMsg(
-        "Servicio de almacenamiento no configurado. Contacta con el equipo técnico."
-      );
+      // Toast de error si la configuración no está disponible.
+      setToast({
+        message:
+          "Servicio de almacenamiento no configurado. Contacta con el equipo técnico.",
+        type: "error",
+      });
       return false;
     }
 
-    setErrorMsg(null);
-    setOkMsg(null);
+    // Limpiamos cualquier toast anterior antes de un nuevo intento.
+    setToast(null);
     setLoading(true);
 
     try {
@@ -186,10 +193,18 @@ export function PackagesPage() {
 
       if (error) throw error;
 
-      setOkMsg("¡Gracias! Tu mensaje fue enviado.");
+      // Toast de éxito al enviar correctamente.
+      setToast({
+        message: "¡Gracias! Tu mensaje fue enviado.",
+        type: "success",
+      });
       return true;
     } catch (err) {
-      setErrorMsg(err?.message || "No se pudo enviar. Intenta de nuevo.");
+      // Toast de error con el mensaje de Supabase (o genérico).
+      setToast({
+        message: err?.message || "No se pudo enviar. Intenta de nuevo.",
+        type: "error",
+      });
       return false;
     } finally {
       setLoading(false);
@@ -295,7 +310,7 @@ export function PackagesPage() {
         </p>
       </section>
 
-      {/* Formulario de contacto para propuestas (controlado + validación) */}
+      {/* Formulario de contacto para propuestas (controlado + validación + toast) */}
       <section
         id="contacto-paquetes"
         className="mt-10 rounded-2xl bg-white ring-1 ring-black/5 p-6"
@@ -320,8 +335,11 @@ export function PackagesPage() {
               formErrors.nombre || formErrors.email || formErrors.mensaje;
 
             if (hasRequiredEmpty || hasClientErrors) {
-              setErrorMsg("Revisa los campos marcados antes de enviar.");
-              setOkMsg(null);
+              // Toast de error si faltan datos o hay errores en campos.
+              setToast({
+                message: "Revisa los campos marcados antes de enviar.",
+                type: "error",
+              });
               return;
             }
 
@@ -398,13 +416,18 @@ export function PackagesPage() {
                 <Mail className="h-5 w-5" />
               )}
             </button>
-
-            {/* Mensajes de feedback global tras el envío */}
-            {okMsg && <p className="text-xs text-green-600">{okMsg}</p>}
-            {errorMsg && <p className="text-xs text-red-600">{errorMsg}</p>}
           </div>
         </form>
       </section>
+
+      {/* Toast flotante de feedback de envío (éxito / error) */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </main>
   );
 }
