@@ -12,6 +12,8 @@ import {
 import { TikTokIcon } from "../components/icons/TikTokIcon";
 // Indicador de scroll que anima al usuario a bajar hacia "Sobre mí"
 import ScrollIndicator from "../components/ScrollIndicator";
+// Barra flotante de redes sociales (solo en pantallas grandes)
+import { FloatingSocialBar } from "../components/FloatingSocialBar";
 
 // Importa tus fotos locales (mosaico principal del HERO)
 import hero1 from "../assets/jhulyana/home/hero-1.jpg";
@@ -69,6 +71,9 @@ export function HomePage({ social }) {
 
   return (
     <main className="font-body px-4 md:px-6">
+      {/* Barra flotante de redes (solo visible en pantallas grandes) */}
+      <FloatingSocialBar social={social} />
+
       {/* CONTENEDOR (tarjeta blanca principal del media kit) */}
       <div className="mx-auto mt-4 md:mt-6 max-w-5xl xl:max-w-7xl 2xl:max-w-[84rem] bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden">
         {/* HERO — Mosaico 3 fotos + indicador de scroll */}
