@@ -1,35 +1,26 @@
 // src/main.jsx
-// -------------------------------------------------------------
-// Punto de entrada de la app (React + Vite).
-// - Importa los estilos globales (Tailwind v4 + tokens de marca).
-// - Monta el componente <App /> dentro del div#root de index.html.
-// - Usamos <StrictMode> para ayudarte a detectar posibles problemas
-//   durante el desarrollo.
-// - Nota: en la Etapa 7 envolveremos <App /> con <HashRouter> para
-//   que GitHub Pages maneje bien las rutas.
-// -------------------------------------------------------------
 
+// Importa el modo estricto de React (ayuda a detectar problemas en desarrollo)
 import { StrictMode } from "react";
+// Importa la API de React 18 para crear la raíz de la aplicación
 import { createRoot } from "react-dom/client";
+// Importa el enrutador basado en hash para gestionar las rutas en la SPA
+import { HashRouter } from "react-router-dom";
 
-// Tailwind v4 + variables de marca (definidas en :root)
+// Importa los estilos globales (Tailwind + variables de marca)
 import "./index.css";
-
-// Componente raíz de la aplicación
+// Importa el componente raíz de la aplicación
 import App from "./App.jsx";
 
-// Busca el contenedor #root que definimos en public/index.html
+// Obtiene el elemento del DOM donde se montará la aplicación
 const rootElement = document.getElementById("root");
 
-// Crea la raíz de React 18 y renderiza la aplicación
+// Crea la raíz de React y renderiza la aplicación envuelta en HashRouter
 createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    {/* HashRouter usa URLs con # para que las rutas funcionen correctamente en GitHub Pages */}
+    <HashRouter>
+      <App />
+    </HashRouter>
   </StrictMode>
 );
-
-// -------------------------------------------------------------
-// HMR (Hot Module Replacement) lo gestiona Vite automáticamente
-// en modo desarrollo: al guardar cambios, verás la UI actualizarse
-// sin recargar toda la página.
-// -------------------------------------------------------------

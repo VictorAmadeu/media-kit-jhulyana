@@ -1,26 +1,21 @@
 // src/App.jsx
-// App raíz de la SPA (aún sin router; se añadirá HashRouter en la etapa de routing).
-// - Integra los componentes globales: Header y Footer.
-// - Renderiza la página Home (Sobre Mí) completa mediante <HomePage />.
-// - Semántica: evitamos anidar <main> aquí porque HomePage ya expone su propio <main>.
-// - Branding: fondo beige y texto ink vía custom properties con sintaxis canónica Tailwind.
-//
-// 🔧 FIX visible (único cambio necesario):
-//    Importamos "App.css" para que se apliquen los resets del template de Vite:
-//    - eliminar padding/margen/max-width de #root
-//    - asegurar html/body/#root a 100% de alto
-//    Con esto, el wrapper con bg-[--beige] definido aquí ocupa toda la pantalla
-//    y se ve el color beige alrededor del contenedor blanco de la primera página.
 
+// Importa React para poder definir componentes funcionales
 import React from "react";
-import "./App.css"; // ← IMPORTANTE: activa el fondo beige alrededor del contenedor blanco
+// Importa los estilos base de la plantilla (ajustan html/body/#root a pantalla completa)
+import "./App.css";
+// Componentes globales
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+// Páginas de la SPA
 import { HomePage } from "./pages/HomePage";
+import { ColaborationsPage } from "./pages/ColaborationsPage";
+import { PackagesPage } from "./pages/PackagesPage";
+// Utilidades de React Router para definir las rutas
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  // Datos oficiales de redes (se usan en HomePage y Footer).
-  // Mantén estos valores en un único lugar para coherencia y fácil actualización.
+  // Datos oficiales de redes sociales de Jhulyana (reutilizados en varias páginas)
   const SOCIAL = {
     instagram: {
       url: "https://www.instagram.com/jhulyanafr?igsh=aHJ5ajJ0N3FwbzR5",
@@ -37,16 +32,26 @@ function App() {
   };
 
   return (
-    // Layout a pantalla completa: columna con Header fijo arriba, contenido flexible y Footer al final.
-    // bg-[--beige] es el fondo crema global que debe verse alrededor de la “tarjeta” blanca de HomePage.
+    // Contenedor raíz: ocupa toda la altura, aplica el fondo beige global y el color de texto principal
     <div className="min-h-screen w-full flex flex-col bg-[--beige] text-[--ink]">
-      {/* Cabecera global (sticky con blur y borde sutil) */}
+      {/* Cabecera fija con el logo JF y el menú de navegación */}
       <Header />
 
-      {/* Página Home / Sobre Mí */}
-      <HomePage social={SOCIAL} />
+      {/* Área principal de contenido: React Router decide qué página mostrar según la ruta */}
+      <main className="flex-1 mx-auto max-w-5xl px-4 pb-10">
+        <Routes>
+          {/* Ruta Home / Sobre Mí */}
+          <Route path="/" element={<HomePage social={SOCIAL} />} />
 
-      {/* Pie global: orden de iconos (TT-PT → IG → TT-ES) y nombre desplazado */}
+          {/* Ruta Colaboraciones */}
+          <Route path="/colaboraciones" element={<ColaborationsPage />} />
+
+          {/* Ruta Paquetes (incluye el formulario conectado a Supabase) */}
+          <Route path="/paquetes" element={<PackagesPage />} />
+        </Routes>
+      </main>
+
+      {/* Pie global con enlaces a TikTok (PT), Instagram y TikTok (ES) */}
       <Footer
         instagramUrl={SOCIAL.instagram.url}
         tiktokPtUrl={SOCIAL.tiktokPt.url}
