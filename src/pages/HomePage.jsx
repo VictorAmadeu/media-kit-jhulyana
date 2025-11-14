@@ -1,11 +1,5 @@
 // src/pages/HomePage.jsx
-// Página Home / Sobre Mí
-//
-// 🔧 Corrección solicitada: COLORES en 3 líneas de la identidad (bajo el HERO)
-//  - “Jhulyana Ferreira”  → color var(--cherry)
-//  - “Lifestyle, beauty and fashion” → color var(--muted)
-//  - Texto del hashtag “#ARMARIOSINPANTALONES” → color var(--cherry)
-//  (No se toca nada más)
+// Página Home / Sobre Mí del media kit de Jhulyana.
 
 import React from "react";
 import {
@@ -85,36 +79,36 @@ export function HomePage({ social }) {
           ))}
         </section>
 
-        {/* Identidad — SOLO los 4 elementos (colores corregidos en 3 líneas) */}
+        {/* Identidad */}
         <section className="bg-white text-center py-8 px-6 shadow-sm">
-          {/* 1) Nombre — forzamos color cereza con var(--cherry) */}
+          {/* 1) Nombre */}
           <h1
             className="font-display font-bold text-5xl md:text-6xl leading-tight"
-            style={{ color: "var(--cherry)" }} // ✅ corrección de color
+            style={{ color: "var(--cherry)" }}
           >
             Jhulyana Ferreira
           </h1>
 
-          {/* 2) Tagline — forzamos gris muted con var(--muted) */}
+          {/* 2) Tagline */}
           <p
             className="mt-2 text-lg md:text-xl font-medium tracking-wide"
-            style={{ color: "var(--muted)" }} // ✅ corrección de color
+            style={{ color: "var(--muted)" }}
           >
             Lifestyle, beauty and fashion
           </p>
 
-          {/* 3) Subtagline (se mantiene igual, no solicitado) */}
+          {/* 3) Subtagline */}
           <p className="mt-1 text-[--ink] text-base md:text-lg font-medium">
             Brasileña en Madrid <span className="hidden sm:inline">|</span>{" "}
             Especialista en Estilo y Cachos
           </p>
 
-          {/* 4) Hashtag (badge) — solo el TEXTO del hashtag cambia a cereza */}
+          {/* 4) Hashtag (badge) */}
           <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[--cherry] px-4 py-2 text-sm shadow-sm">
             <span className="inline-block h-2 w-2 rounded-full bg-[--cherry]" />
             <span
               className="uppercase font-semibold tracking-wide"
-              style={{ color: "var(--cherry)" }} // ✅ corrección de color (texto del hashtag)
+              style={{ color: "var(--cherry)" }}
             >
               #ARMARIOSINPANTALONES
             </span>
@@ -242,7 +236,7 @@ export function HomePage({ social }) {
                   "Comunidad fiel y de alto engagement",
                   "Nicho único: estilo femenino y cuidado de cabello rizado",
                   "Contenido bilingüe (ES/PT) para mayor alcance",
-                  "12-15mil visualizaciones orgánicas diarias en stories",
+                  "12-15mil visualizaciones orgánicas diarias en stories",
                 ].map((txt, i) => (
                   <li
                     key={i}

@@ -1,14 +1,7 @@
 // src/pages/ColaborationsPage.jsx
-import React, { useEffect } from "react";
+// Página 2 — Colaboraciones con Marcas (mockups + insights).
 
-/**
- * Página 2 — Colaboraciones con Marcas
- * Corrección (solo responsividad móvil):
- *  - Insights completos en pantallas pequeñas (object-contain SOLO en móvil).
- *  - Lupa también en móvil (active) y accesible por teclado (focus-visible).
- *  - No se tocan tamaños (tus alturas se mantienen).
- *  - iPhone: sin cambios de tamaño (ya ajustado previamente).
- */
+import React, { useEffect } from "react";
 
 // 🖼️ Imports locales (6 imágenes)
 import shopSollerPhoto from "../assets/jhulyana/colaboraciones/shop-soller.jpg";
@@ -18,11 +11,10 @@ import naturaeuropeInsights from "../assets/jhulyana/colaboraciones/naturaeurope
 import thaisPhoto from "../assets/jhulyana/colaboraciones/thaisrodrigues.jpg";
 import thaisInsights from "../assets/jhulyana/colaboraciones/thaisrodrigues-insights.jpg";
 
-/** Mock-up de iPhone (ratio 9:19, Tailwind v4 con aspect-9/19) */
+// Mock-up de iPhone (ratio 9:19 usando aspect-9/19)
 function IPhoneMock({ src, alt }) {
   return (
     <div
-      // Mantengo el tamaño que definiste (NO modificado)
       className="relative w-full max-w-[340px] md:max-w-[380px] mx-auto"
       aria-label="Publicación renderizada dentro de un iPhone"
     >
@@ -48,10 +40,9 @@ function IPhoneMock({ src, alt }) {
 
 /**
  * Tarjeta de insights:
- * - En móvil: object-contain (para ver la imagen ENTERA sin recortes).
- * - En md+: volvemos a object-cover (look lleno como tenías).
+ * - En móvil: object-contain para ver la imagen completa.
+ * - En md+: object-cover para mantener el look lleno.
  * - Lupa: hover (desktop), active (móvil) y focus-visible (teclado).
- * - ⚠️ NO cambio tus alturas (h-152 / md:h-176) como pediste.
  */
 function InsightCard({ src, alt }) {
   return (
@@ -61,9 +52,9 @@ function InsightCard({ src, alt }) {
         alt={alt}
         loading="lazy"
         decoding="async"
-        tabIndex={0} /* accesible: permite focus para teclado */
+        tabIndex={0} /* accesible: permite focus con teclado */
         className="
-          w-full h-152 md:h-176         /* tamaños originales: NO tocar */
+          w-full h-152 md:h-176         /* alturas originales */
           object-contain md:object-cover /* móvil: entero; md+: look lleno */
           transition-transform duration-300 ease-out
           transform-gpu will-change-transform
@@ -105,7 +96,7 @@ export function ColaborationsPage() {
     },
   ];
 
-  // Tests mínimos (solo en desarrollo)
+  // Tests mínimos en desarrollo para asegurar datos de colaboraciones
   useEffect(() => {
     if (import.meta.env.DEV) {
       console.group("ColaborationsPage::checks");
