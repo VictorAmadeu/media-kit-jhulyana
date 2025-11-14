@@ -2,12 +2,14 @@
 // Página 3 — Paquetes
 // -----------------------------------------------------------------------------
 // Objetivo: mostrar los paquetes de colaboración y un formulario de contacto
-// conectado a Supabase para recibir propuestas de marcas.
+// conectado a Supabase para recibir propuestas de marcas con validación básica.
 // -----------------------------------------------------------------------------
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Check, Loader2, Mail } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
+// Componente de input con icono y validación visual.
+import { FormInput } from "../components/FormInput";
 
 // ───────────────────────────── Supabase Client ───────────────────────────────
 // URL y clave pública de Supabase (se leen desde variables de entorno Vite).
@@ -79,18 +81,26 @@ const SOCIAL_LINKS = {
 };
 
 // ───────────────────────────── Helpers del formulario ───────────────────────
-// Extrae un campo de texto de FormData y devuelve un string limpio.
-const readTextField = (formData, name) => {
-  const value = formData.get(name);
-  return typeof value === "string" ? value.trim() : "";
+// Estado inicial del formulario controlado.
+const EMPTY_FORM = {
+  nombre: "",
+  email: "",
+  marca: "",
+  mensaje: "",
 };
 
 // Componente principal de la página de paquetes.
 export function PackagesPage() {
-  // Estado para controlar el envío del formulario.
+  // Estado para controlar el envío del formulario (loading y mensajes globales).
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [okMsg, setOkMsg] = useState(null);
+
+  // Valores del formulario controlado.
+  const [formValues, setFormValues] = useState(EMPTY_FORM);
+
+  // Errores por campo (para mostrar mensajes en línea).
+  const [formErrors, setFormErrors] = useState({});
 
   // Comprueba una vez si todas las URLs sociales están definidas.
   const hasSocialLinks = useMemo(
@@ -116,6 +126,37 @@ export function PackagesPage() {
     );
     console.groupEnd();
   }, [hasSocialLinks]);
+
+  // Maneja cambios en los campos del formulario.
+  // Actualiza formValues y aplica validación en tiempo real.
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    // Actualizamos el valor del campo correspondiente.
+    setFormValues((vals) => ({ ...vals, [name]: value }));
+
+    // Validación simple por campo.
+    setFormErrors((errs) => {
+      const next = { ...errs };
+
+      if (name === "email") {
+        const emailValid = /\S+@\S+\.\S+/.test(value);
+        next.email = emailValid ? null : "Correo no válido";
+      } else if (name === "nombre") {
+        next.nombre = value.trim().length < 2 ? "Introduce tu nombre" : null;
+      } else if (name === "mensaje") {
+        next.mensaje =
+          value.trim().length < 10
+            ? "Por favor, cuéntame un poco más sobre tu propuesta."
+            : null;
+      } else {
+        // Marca es opcional, por lo que no generamos error.
+        next[name] = null;
+      }
+
+      return next;
+    });
+  };
 
   // Envía la propuesta a la tabla "propuestas" en Supabase.
   // Devuelve true si la inserción se ha realizado correctamente.
@@ -254,7 +295,7 @@ export function PackagesPage() {
         </p>
       </section>
 
-      {/* Formulario de contacto para propuestas */}
+      {/* Formulario de contacto para propuestas (controlado + validación) */}
       <section
         id="contacto-paquetes"
         className="mt-10 rounded-2xl bg-white ring-1 ring-black/5 p-6"
@@ -265,60 +306,83 @@ export function PackagesPage() {
         >
           Envíame tu propuesta
         </h3>
+
         <form
           className="mt-4 grid gap-4"
           onSubmit={async (event) => {
             event.preventDefault();
-            const form = event.currentTarget;
-            const formData = new FormData(form);
-            const payload = {
-              nombre: readTextField(formData, "nombre"),
-              email: readTextField(formData, "email"),
-              marca: readTextField(formData, "marca"),
-              mensaje: readTextField(formData, "mensaje"),
-            };
 
-            const success = await submitToSupabase(payload);
+            // Validación final antes de enviar (por si el usuario ignora errores).
+            const hasRequiredEmpty =
+              !formValues.nombre || !formValues.email || !formValues.mensaje;
+
+            const hasClientErrors =
+              formErrors.nombre || formErrors.email || formErrors.mensaje;
+
+            if (hasRequiredEmpty || hasClientErrors) {
+              setErrorMsg("Revisa los campos marcados antes de enviar.");
+              setOkMsg(null);
+              return;
+            }
+
+            const success = await submitToSupabase(formValues);
             if (success) {
-              form.reset();
+              // Reinicia valores y errores del formulario.
+              setFormValues(EMPTY_FORM);
+              setFormErrors({});
             }
           }}
         >
-          {/* Campos básicos de contacto */}
+          {/* Campos básicos de contacto con iconos y validación en línea */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <input
+            <FormInput
               name="nombre"
               required
               placeholder="Tu nombre"
-              className="rounded-xl border border-black/10 bg-[--stone] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[--cherry]"
+              value={formValues.nombre}
+              onChange={handleChange}
+              error={formErrors.nombre}
               autoComplete="name"
             />
-            <input
-              type="email"
+            <FormInput
               name="email"
+              type="email"
               required
               placeholder="Email de contacto"
-              className="rounded-xl border border-black/10 bg-[--stone] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[--cherry]"
+              value={formValues.email}
+              onChange={handleChange}
+              error={formErrors.email}
               autoComplete="email"
             />
           </div>
 
-          {/* Campo opcional de marca/empresa */}
-          <input
+          {/* Campo opcional de marca/empresa con icono */}
+          <FormInput
             name="marca"
             placeholder="Marca / Empresa (opcional)"
-            className="rounded-xl border border-black/10 bg-[--stone] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[--cherry]"
+            value={formValues.marca}
+            onChange={handleChange}
+            error={formErrors.marca}
             autoComplete="organization"
           />
 
-          {/* Mensaje con detalles de la propuesta */}
-          <textarea
-            name="mensaje"
-            required
-            rows={5}
-            placeholder="Cuéntame sobre el producto/servicio y lo que buscas"
-            className="rounded-xl border border-black/10 bg-[--stone] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[--cherry]"
-          />
+          {/* Mensaje con detalles de la propuesta (textarea controlado) */}
+          <div className="relative">
+            <textarea
+              name="mensaje"
+              required
+              rows={5}
+              placeholder="Cuéntame sobre el producto/servicio y lo que buscas"
+              value={formValues.mensaje}
+              onChange={handleChange}
+              className={`rounded-xl border bg-[--stone] px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[--cherry] ${
+                formErrors.mensaje ? "border-red-500" : "border-black/10"
+              }`}
+            />
+            {formErrors.mensaje && (
+              <p className="mt-1 text-xs text-red-600">{formErrors.mensaje}</p>
+            )}
+          </div>
 
           {/* Botón de envío (icon-only) con feedback visual de carga */}
           <div className="flex flex-col items-center gap-2">
@@ -334,6 +398,8 @@ export function PackagesPage() {
                 <Mail className="h-5 w-5" />
               )}
             </button>
+
+            {/* Mensajes de feedback global tras el envío */}
             {okMsg && <p className="text-xs text-green-600">{okMsg}</p>}
             {errorMsg && <p className="text-xs text-red-600">{errorMsg}</p>}
           </div>
