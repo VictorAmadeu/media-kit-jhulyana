@@ -10,17 +10,21 @@ import {
   Venus,
 } from "lucide-react";
 import { TikTokIcon } from "../components/icons/TikTokIcon";
+// Indicador de scroll que anima al usuario a bajar hacia "Sobre mí"
+import ScrollIndicator from "../components/ScrollIndicator";
 
-// Importa tus fotos locales (ajusta nombres si cambian)
+// Importa tus fotos locales (mosaico principal del HERO)
 import hero1 from "../assets/jhulyana/home/hero-1.jpg";
 import hero2 from "../assets/jhulyana/home/hero-2.jpg";
 import hero3 from "../assets/jhulyana/home/hero-3.jpg";
 
+// Importa las fotos de la sección "Mi estilo"
 import style1 from "../assets/jhulyana/home/hero-4.jpg";
 import style2 from "../assets/jhulyana/home/hero-5.jpg";
 import style3 from "../assets/jhulyana/home/hero-6.jpg";
 
 // Tarjeta simple para redes (icon-only + valor)
+// Se utiliza para mostrar TikTok PT, Instagram y TikTok ES.
 const SocialCard = ({ href, icon, label, value }) => (
   <a
     href={href}
@@ -39,6 +43,7 @@ const SocialCard = ({ href, icon, label, value }) => (
 );
 
 // Tarjeta de estadística (no clicable)
+// Se usa para mostrar datos de audiencia: seguidores, localización, género, engagement.
 const Stat = ({ icon, label, value }) => (
   <div className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm">
     <div
@@ -52,7 +57,10 @@ const Stat = ({ icon, label, value }) => (
   </div>
 );
 
+// Componente principal de la Home / Sobre Mí.
+// Recibe por props el objeto `social` con las URLs y los contadores de seguidores.
 export function HomePage({ social }) {
+  // Array con las imágenes del mosaico superior (HERO).
   const headerImages = [
     { src: hero1, alt: "Jhulyana — street fashion 1" },
     { src: hero2, alt: "Jhulyana — close-up rizos" },
@@ -61,27 +69,33 @@ export function HomePage({ social }) {
 
   return (
     <main className="font-body px-4 md:px-6">
-      {/* CONTENEDOR (tarjeta blanca) */}
+      {/* CONTENEDOR (tarjeta blanca principal del media kit) */}
       <div className="mx-auto mt-4 md:mt-6 max-w-5xl xl:max-w-7xl 2xl:max-w-[84rem] bg-white rounded-3xl shadow-sm ring-1 ring-black/5 overflow-hidden">
-        {/* HERO — Mosaico 3 fotos */}
-        <section className="grid grid-cols-3 gap-0">
-          {headerImages.map(({ src, alt }, i) => (
-            <div key={i} className="aspect-square overflow-hidden">
-              <img
-                src={src}
-                alt={alt}
-                className="h-full w-full object-cover object-bottom"
-                loading="lazy"
-                decoding="async"
-                sizes="(max-width: 768px) 33vw, 33vw"
-              />
-            </div>
-          ))}
+        {/* HERO — Mosaico 3 fotos + indicador de scroll */}
+        {/* `relative` permite posicionar el ScrollIndicator de forma absoluta dentro de esta sección */}
+        <section className="relative">
+          <div className="grid grid-cols-3 gap-0">
+            {headerImages.map(({ src, alt }, i) => (
+              <div key={i} className="aspect-square overflow-hidden">
+                <img
+                  src={src}
+                  alt={alt}
+                  className="h-full w-full object-cover object-bottom"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(max-width: 768px) 33vw, 33vw"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Indicador de scroll que invita a bajar hasta la sección "Sobre mí" */}
+          <ScrollIndicator />
         </section>
 
-        {/* Identidad */}
+        {/* Identidad (nombre, tagline y hashtag principal) */}
         <section className="bg-white text-center py-8 px-6 shadow-sm">
-          {/* 1) Nombre */}
+          {/* Nombre principal de Jhulyana */}
           <h1
             className="font-display font-bold text-5xl md:text-6xl leading-tight"
             style={{ color: "var(--cherry)" }}
@@ -89,7 +103,7 @@ export function HomePage({ social }) {
             Jhulyana Ferreira
           </h1>
 
-          {/* 2) Tagline */}
+          {/* Tagline descriptivo del tipo de contenido */}
           <p
             className="mt-2 text-lg md:text-xl font-medium tracking-wide"
             style={{ color: "var(--muted)" }}
@@ -97,13 +111,13 @@ export function HomePage({ social }) {
             Lifestyle, beauty and fashion
           </p>
 
-          {/* 3) Subtagline */}
+          {/* Subtagline con ubicación y especialidad */}
           <p className="mt-1 text-[--ink] text-base md:text-lg font-medium">
             Brasileña en Madrid <span className="hidden sm:inline">|</span>{" "}
             Especialista en Estilo y Cachos
           </p>
 
-          {/* 4) Hashtag (badge) */}
+          {/* Hashtag de marca #ARMARIOSINPANTALONES */}
           <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-[--cherry] px-4 py-2 text-sm shadow-sm">
             <span className="inline-block h-2 w-2 rounded-full bg-[--cherry]" />
             <span
@@ -115,7 +129,7 @@ export function HomePage({ social }) {
           </div>
         </section>
 
-        {/* Social cards */}
+        {/* Social cards (resumen rápido de redes y seguidores) */}
         <section className="mt-4 px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <SocialCard
@@ -140,9 +154,10 @@ export function HomePage({ social }) {
         </section>
 
         {/* Sobre mí + Audiencia + Estilo + Destaques */}
-        <section className="px-6 md:px-10 py-8">
+        {/* Añadimos id="about-section" para que el ScrollIndicator pueda hacer scroll suave hasta aquí */}
+        <section id="about-section" className="px-6 md:px-10 py-8">
           <div className="grid md:grid-cols-[2fr_3fr] gap-8">
-            {/* Sobre mí */}
+            {/* Columna izquierda: texto "Sobre mí" */}
             <div>
               <h2
                 className="font-display text-xl text-center"
@@ -168,9 +183,9 @@ export function HomePage({ social }) {
               </p>
             </div>
 
-            {/* Derecha: Audiencia + Estilo + Destaques */}
+            {/* Columna derecha: Audiencia + Mi estilo */}
             <div>
-              {/* Audiencia */}
+              {/* Módulo de audiencia con 4 estadísticas clave */}
               <h2
                 className="font-display text-xl text-center"
                 style={{ color: "var(--cherry)" }}
@@ -202,7 +217,7 @@ export function HomePage({ social }) {
                 />
               </div>
 
-              {/* Mi estilo (3 imágenes cuadradas) */}
+              {/* Grid de 3 imágenes que muestran el estilo visual de Jhulyana */}
               <h3 className="mt-6 font-display text-lg text-center">
                 Mi estilo
               </h3>
@@ -225,7 +240,8 @@ export function HomePage({ social }) {
               </div>
             </div>
           </div>
-          {/* Destaques */}
+
+          {/* Bloque de destaques (puntos fuertes para marcas) */}
           <div className="mt-8 flex justify-center">
             <div className="w-full max-w-3xl rounded-2xl border border-black/5 bg-white px-8 py-6 text-center shadow-md">
               <h3 className="font-display text-2xl font-semibold tracking-wide text-[#d11c6b]">
@@ -251,7 +267,7 @@ export function HomePage({ social }) {
           </div>
         </section>
 
-        {/* CTA final (icon-only) */}
+        {/* CTA final (icon-only) que lleva al formulario de contacto (otra página/anchor) */}
         <div className="px-6 md:px-10 pb-10 flex flex-col items-center gap-3">
           <a
             href="#contacto"
