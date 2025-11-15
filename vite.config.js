@@ -1,4 +1,4 @@
-// vite.config.js
+//vite.config.js
 
 // Importa la función de Vite para definir la configuración del proyecto
 import { defineConfig } from "vite";

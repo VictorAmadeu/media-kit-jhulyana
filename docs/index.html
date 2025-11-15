@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <!-- =========================
+         Metadatos básicos
+         ========================= -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Jhulyana Ferreira — Media Kit</title>
+    <meta
+      name="description"
+      content="Media Kit oficial de Jhulyana Ferreira: estilo, belleza y lifestyle. Colaboraciones, paquetes y contacto."
+    />
+
+    <!--
+      Color de tema para navegadores móviles.
+      Usamos el cherry de la marca (#C2185B).
+    -->
+    <meta name="theme-color" content="#C2185B" />
+
+    <!-- =========================
+         Icono / Favicon
+         ========================= -->
+    <!-- En Vite (dev) funciona /icono-jf.svg.
+         En GitHub Pages bajo /repo, puede convenir un icono propio dentro de /public.
+         Lo dejamos así y, si cambias la base de Vite, lo ajustamos. -->
+    <link rel="icon" type="image/svg+xml" href="./icono-jf.svg?v=2" />
+
+    <!-- =========================
+         Fuentes (Mejor práctica)
+         ========================= -->
+    <!-- Preconexiones: aceleran la descarga de las fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Playfair Display (títulos) + Poppins (texto) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      No importamos Tailwind aquí.
+      Tailwind v4 se importa en src/index.css con:
+      @import "tailwindcss";
+      y Vite procesa todo con el plugin @tailwindcss/vite.
+    -->
+
+    <!--
+      Nota GitHub Pages:
+      Si despliegas en un subpath (p.ej.: https://usuario.github.io/mi-repo/),
+      considera definir "base" en vite.config.js o usar paths relativos.
+      El script /src/main.jsx suele funcionar en dev; en producción
+      Vite reescribe rutas al hacer build.
+    -->
+    <script type="module" crossorigin src="./assets/index-C8a2T0Pk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BK2wOlaE.css">
+  </head>
+
+  <body>
+    <!--
+      Contenedor raíz para React.
+      Aquí React inyectará la aplicación.
+    -->
+    <div id="root"></div>
+
+    <!--
+      Entrada del bundle en modo desarrollo (Vite).
+      En build, Vite generará assets estáticos y reescribirá estas rutas.
+    -->
+
+    <!--
+      Accesibilidad progresiva:
+      Si el usuario no tiene JS, al menos mostramos un aviso.
+    -->
+    <noscript>
+      Necesitas habilitar JavaScript para ver este sitio correctamente.
+    </noscript>
+  </body>
+</html>
