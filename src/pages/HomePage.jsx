@@ -137,6 +137,26 @@ export function HomePage({ social }) {
     { src: hero3, alt: "Jhulyana — lifestyle Madrid" },
   ];
 
+  // Array con las imágenes de la sección "Mi estilo" y el texto de overlay.
+  // Los textos están pensados para marcas: refuerzan los pilares de estilo.
+  const stylePhotos = [
+    {
+      src: style1,
+      alt: "Detalle de look sin pantalones y accesorios",
+      overlay: "Estilo urbano #ArmarioSinPantalones",
+    },
+    {
+      src: style2,
+      alt: "Cuidado de rizos en salón de belleza",
+      overlay: "Rituales y cuidado de rizos",
+    },
+    {
+      src: style3,
+      alt: "Pasaporte y viaje en avión, lifestyle viajero",
+      overlay: "Lifestyle viajero y aeropuerto",
+    },
+  ];
+
   return (
     <main className="font-body px-4 md:px-6">
       {/* Barra flotante de redes (solo visible en pantallas grandes) */}
@@ -157,12 +177,11 @@ export function HomePage({ social }) {
                   // Parallax/zoom sutil:
                   // - transition-transform + ease-out → animación suave
                   // - group-hover:scale-110 → zoom al pasar el ratón
-                  // - focus-visible:scale-110 + tabIndex → permite activarlo con teclado
-                  className="h-full w-full object-cover object-bottom transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:scale-110 focus-visible:scale-110"
+                  // - group-focus-visible:scale-110 → accesible con teclado
+                  className="h-full w-full object-cover object-bottom transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:scale-110 group-focus-visible:scale-110"
                   loading="lazy"
                   decoding="async"
                   sizes="(max-width: 768px) 33vw, 33vw"
-                  tabIndex={0}
                 />
               </div>
             ))}
@@ -311,21 +330,41 @@ export function HomePage({ social }) {
                 Mi estilo
               </h3>
               <div className="mt-3 grid grid-cols-3 gap-3">
-                {[style1, style2, style3].map((src, i) => (
-                  // `group` permite aplicar el zoom al <img> en hover/focus
+                {stylePhotos.map((photo, i) => (
+                  // Contenedor interactivo:
+                  // - `relative` para posicionar el overlay.
+                  // - `group` para coordinar hover/focus entre imagen y overlay.
                   <div
                     key={i}
-                    className="aspect-square overflow-hidden rounded-xl ring-1 ring-black/5 group"
+                    className="relative aspect-square overflow-hidden rounded-xl ring-1 ring-black/5 group"
+                    tabIndex={0}
+                    aria-label={photo.alt}
                   >
+                    {/* Imagen base con zoom sutil */}
                     <img
-                      src={src}
-                      alt={`Mi estilo ${i + 1}`}
-                      className="h-full w-full object-cover object-bottom transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:scale-110 focus-visible:scale-110"
+                      src={photo.src}
+                      alt={photo.alt}
+                      className="h-full w-full object-cover object-bottom transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:scale-110 group-focus-visible:scale-110"
                       loading="lazy"
                       decoding="async"
                       sizes="(max-width: 768px) 33vw, 33vw"
-                      tabIndex={0}
                     />
+
+                    {/* Superposición interactiva:
+                        - Capa negra semitransparente.
+                        - Aparece al hacer hover o focus (teclado).
+                        - Deslizamiento vertical + cambio de opacidad. */}
+                    <div
+                      className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/40
+                                 text-white opacity-0 translate-y-full
+                                 group-hover:opacity-100 group-hover:translate-y-0
+                                 group-focus-visible:opacity-100 group-focus-visible:translate-y-0
+                                 transition-all duration-300"
+                    >
+                      <span className="px-3 text-xs md:text-sm text-center">
+                        {photo.overlay}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -376,10 +415,22 @@ export function HomePage({ social }) {
               <path d="M4 4h16v16H4z" />
             </svg>
           </SmoothScrollLink>
-          <p className="text-sm" style={{ color: "var(--muted)" }}>
+
+          {/* 
+            Corrección mobile:
+            - Añadimos `text-center` para centrar el texto en pantallas pequeñas.
+            - En md+ mantenemos el comportamiento actual (`md:text-left`).
+          */}
+          <p
+            className="text-sm text-center md:text-left"
+            style={{ color: "var(--muted)" }}
+          >
             ¿Interesado en una colaboración personalizada? ¡Hablemos!
           </p>
-          <p className="text-xs" style={{ color: "var(--muted)" }}>
+          <p
+            className="text-xs text-center md:text-left"
+            style={{ color: "var(--muted)" }}
+          >
             Mis redes sociales están disponibles aquí.
           </p>
         </div>
