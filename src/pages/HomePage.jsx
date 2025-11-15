@@ -3,11 +3,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Instagram,
-  MapPin,
-  MessageCircle,
-  UserRound,
-  Venus,
+  Instagram, // Icono de Instagram (se mantiene igual)
+  UsersRound, // Nuevo icono moderno para "Seguidores"
+  MapPinHouse, // Nuevo icono moderno para "Localización"
+  MessageCircleHeart, // Nuevo icono moderno para "Engagement"
+  Sparkles, // Nuevo icono moderno para "Género (mujeres, brillo, estilo)"
 } from "lucide-react";
 import { TikTokIcon } from "../components/icons/TikTokIcon";
 // Indicador de scroll que anima al usuario a bajar hacia "Sobre mí"
@@ -295,29 +295,32 @@ export function HomePage({ social }) {
                 Mi audiencia
               </h2>
               <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {/* Seguidores → contador animado (61k+) */}
+                {/* Seguidores → contador animado (61k+) + icono moderno de comunidad */}
                 <Stat
-                  icon={<UserRound className="h-6 w-6" aria-hidden="true" />}
+                  icon={<UsersRound className="h-6 w-6" aria-hidden="true" />}
                   label="Seguidores"
                   value="61k+"
                   animated
                 />
-                {/* Localización → se mantiene estático (texto complejo) */}
+                {/* Localización → distribución ES/BR con pin de casa moderno */}
                 <Stat
-                  icon={<MapPin className="h-6 w-6" aria-hidden="true" />}
+                  icon={<MapPinHouse className="h-6 w-6" aria-hidden="true" />}
                   label="Localización"
                   value="70% ES / 30% BR"
                 />
-                {/* Género → se mantiene estático (texto complejo) */}
+                {/* Género → 90% Mujeres, icono Sparkles para enfatizar estilo/beauty */}
                 <Stat
-                  icon={<Venus className="h-6 w-6" aria-hidden="true" />}
+                  icon={<Sparkles className="h-6 w-6" aria-hidden="true" />}
                   label="Género"
                   value="90% Mujeres"
                 />
-                {/* Engagement → contador animado con decimal (8,9%) */}
+                {/* Engagement → icono de mensaje con corazón para destacar interacción */}
                 <Stat
                   icon={
-                    <MessageCircle className="h-6 w-6" aria-hidden="true" />
+                    <MessageCircleHeart
+                      className="h-6 w-6"
+                      aria-hidden="true"
+                    />
                   }
                   label="Engagement"
                   value="8,9%"
@@ -416,10 +419,10 @@ export function HomePage({ social }) {
             </svg>
           </SmoothScrollLink>
 
-          {/* 
+          {/*
             Corrección mobile:
-            - Añadimos `text-center` para centrar el texto en pantallas pequeñas.
-            - En md+ mantenemos el comportamiento actual (`md:text-left`).
+            - `text-center` para centrar el texto en pantallas pequeñas.
+            - En md+ mantenemos el comportamiento original (`md:text-left`).
           */}
           <p
             className="text-sm text-center md:text-left"
