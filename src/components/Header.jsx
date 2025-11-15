@@ -12,8 +12,8 @@ export function Header() {
       {/* Contenedor que alinea logo y menú, con padding extra en pantallas grandes */}
       <div className="mx-auto max-w-5xl w-full px-4 py-3 flex items-center justify-between lg:max-w-none lg:w-full lg:px-8 xl:px-12 2xl:px-16">
         {/* Logo JF (se mantiene EXACTAMENTE igual que en tu versión) */}
-        <a
-          href="/"
+        <Link
+          to="/"
           aria-label="Ir al inicio"
           className="flex items-center gap-2 rounded-full
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--cherry] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
@@ -25,7 +25,7 @@ export function Header() {
             JF
           </span>
           <span className="sr-only">Jhulyana Ferreira</span>
-        </a>
+        </Link>
 
         {/* Menú de navegación principal (usa Link para cambiar de ruta sin recargar la página) */}
         <nav
