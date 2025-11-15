@@ -1,7 +1,7 @@
 // src/pages/HomePage.jsx
 // Página Home / Sobre Mí del media kit de Jhulyana.
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Instagram,
   MapPin,
@@ -16,6 +16,10 @@ import ScrollIndicator from "../components/ScrollIndicator";
 import { FloatingSocialBar } from "../components/FloatingSocialBar";
 // Enlace con scroll suave para anchors internos (#section)
 import SmoothScrollLink from "../components/SmoothScrollLink";
+// Tarjeta de estadística con contador animado (audiencia)
+import Stat from "../components/Stat";
+// Hook de contador animado (lo reutilizamos para las SocialCard)
+import { useCountUp } from "../hooks/useCountUp";
 
 // Importa tus fotos locales (mosaico principal del HERO)
 import hero1 from "../assets/jhulyana/home/hero-1.jpg";
@@ -27,39 +31,101 @@ import style1 from "../assets/jhulyana/home/hero-4.jpg";
 import style2 from "../assets/jhulyana/home/hero-5.jpg";
 import style3 from "../assets/jhulyana/home/hero-6.jpg";
 
-// Tarjeta simple para redes (icon-only + valor).
-// Se utiliza para mostrar TikTok PT, Instagram y TikTok ES.
-const SocialCard = ({ href, icon, label, value }) => (
-  <a
-    href={href}
-    aria-label={label}
-    className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm hover:bg-[--cherry] hover:text-white transition"
-  >
-    <div
-      className="mx-auto flex h-10 w-10 items-center justify-center rounded-full"
-      style={{ backgroundColor: "var(--beige)", color: "var(--cherry)" }}
-    >
-      {icon}
-    </div>
-    <div className="mt-2 text-base font-semibold">{value}</div>
-    <div className="text-xs text-[--muted]">{label}</div>
-  </a>
-);
+/**
+ * Tarjeta simple para redes (icon-only + valor).
+ * Ahora puede animar el valor numérico usando el prop `animated`.
+ * - Si `value` tiene formato "88k+", "61k+", "8k+" → animamos la parte numérica.
+ * - Usa IntersectionObserver para empezar la animación cuando la tarjeta entra en viewport.
+ */
+const SocialCard = ({ href, icon, label, value, animated = false }) => {
+  // Ref a la tarjeta, para saber cuándo entra en pantalla
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
 
-// Tarjeta de estadística (no clicable).
-// Se usa para mostrar datos de audiencia: seguidores, localización, género, engagement.
-const Stat = ({ icon, label, value }) => (
-  <div className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm">
-    <div
-      className="mx-auto flex h-12 w-12 items-center justify-center rounded-full"
-      style={{ backgroundColor: "var(--beige)", color: "var(--cherry)" }}
+  // Normalizamos el valor a string
+  const raw = String(value ?? "").trim();
+  let target = 0; // valor numérico objetivo
+  let mode = "raw"; // por defecto, mostramos el string original
+
+  // Modo "k+" → ej. "88k+", "61k+"
+  if (raw.includes("k")) {
+    const match = raw.match(/(\d+)/);
+    if (match) {
+      target = parseInt(match[1], 10); // 88, 61, 8...
+      mode = "k";
+    }
+  } else {
+    // Números sin sufijo (por si más adelante se usa con "1200", etc.)
+    const match = raw.match(/(\d+)/);
+    if (match) {
+      target = parseInt(match[1], 10);
+      mode = "int";
+    }
+  }
+
+  // Valor animado: solo se mueve si animated=true, hay modo numérico
+  // y la tarjeta es visible en el viewport.
+  const count = useCountUp(
+    animated && mode !== "raw" && visible ? target : 0,
+    1500
+  );
+
+  // IntersectionObserver: activa `visible` cuando la tarjeta se ve ~60%.
+  useEffect(() => {
+    if (!animated) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect(); // evitamos repetir animaciones
+        }
+      },
+      { threshold: 0.6 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [animated]);
+
+  // Decidimos qué mostrar finalmente como texto del contador
+  let displayValue = value; // por defecto, el valor original
+
+  if (animated && mode !== "raw") {
+    if (mode === "k") {
+      // 0 → 88  ⇒ "88k+"
+      displayValue = `${count}k+`;
+    } else if (mode === "int") {
+      displayValue = `${count}`;
+    }
+  }
+
+  return (
+    <a
+      ref={animated ? ref : null}
+      href={href}
+      aria-label={label}
+      className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm hover:bg-[--cherry] hover:text-white transition"
     >
-      {icon}
-    </div>
-    <div className="mt-2 text-base font-semibold">{value}</div>
-    <div className="text-xs text-[--muted]">{label}</div>
-  </div>
-);
+      {/* Icono circular de la red social */}
+      <div
+        className="mx-auto flex h-10 w-10 items-center justify-center rounded-full"
+        style={{ backgroundColor: "var(--beige)", color: "var(--cherry)" }}
+      >
+        {icon}
+      </div>
+
+      {/* Contador (con o sin animación, según `animated`) */}
+      <div className="mt-2 text-base font-semibold">{displayValue}</div>
+
+      {/* Etiqueta con el nombre de la red */}
+      <div className="text-xs text-[--muted]">{label}</div>
+    </a>
+  );
+};
 
 // Componente principal de la Home / Sobre Mí.
 // Recibe por props el objeto `social` con las URLs y los contadores de seguidores.
@@ -139,23 +205,27 @@ export function HomePage({ social }) {
         {/* Social cards (resumen rápido de redes y seguidores) */}
         <section className="mt-4 px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Estas tres tarjetas ahora tienen contador animado (`animated`) */}
             <SocialCard
               href={social.tiktokPt.url}
               icon={<TikTokIcon className="h-5 w-5" />}
               label="TikTok (PT)"
-              value={social.tiktokPt.followers}
+              value={social.tiktokPt.followers} // ej. "88k+"
+              animated
             />
             <SocialCard
               href={social.instagram.url}
               icon={<Instagram className="h-5 w-5" aria-hidden="true" />}
               label="Instagram"
-              value={social.instagram.followers}
+              value={social.instagram.followers} // ej. "61k+"
+              animated
             />
             <SocialCard
               href={social.tiktokEs.url}
               icon={<TikTokIcon className="h-5 w-5" />}
               label="TikTok (ES)"
-              value={social.tiktokEs.followers}
+              value={social.tiktokEs.followers} // ej. "8k+"
+              animated
             />
           </div>
         </section>
@@ -200,27 +270,33 @@ export function HomePage({ social }) {
                 Mi audiencia
               </h2>
               <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {/* Seguidores → contador animado (61k+) */}
                 <Stat
                   icon={<UserRound className="h-6 w-6" aria-hidden="true" />}
                   label="Seguidores"
                   value="61k+"
+                  animated
                 />
+                {/* Localización → se mantiene estático (texto complejo) */}
                 <Stat
                   icon={<MapPin className="h-6 w-6" aria-hidden="true" />}
                   label="Localización"
                   value="70% ES / 30% BR"
                 />
+                {/* Género → se mantiene estático (texto complejo) */}
                 <Stat
                   icon={<Venus className="h-6 w-6" aria-hidden="true" />}
                   label="Género"
                   value="90% Mujeres"
                 />
+                {/* Engagement → contador animado con decimal (8,9%) */}
                 <Stat
                   icon={
                     <MessageCircle className="h-6 w-6" aria-hidden="true" />
                   }
                   label="Engagement"
                   value="8,9%"
+                  animated
                 />
               </div>
 
