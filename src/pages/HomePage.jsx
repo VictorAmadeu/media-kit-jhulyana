@@ -149,14 +149,20 @@ export function HomePage({ social }) {
         <section className="relative">
           <div className="grid grid-cols-3 gap-0">
             {headerImages.map(({ src, alt }, i) => (
-              <div key={i} className="aspect-square overflow-hidden">
+              // Añadimos `group` para poder aplicar el zoom al <img> via group-hover
+              <div key={i} className="aspect-square overflow-hidden group">
                 <img
                   src={src}
                   alt={alt}
-                  className="h-full w-full object-cover object-bottom"
+                  // Parallax/zoom sutil:
+                  // - transition-transform + ease-out → animación suave
+                  // - group-hover:scale-110 → zoom al pasar el ratón
+                  // - focus-visible:scale-110 + tabIndex → permite activarlo con teclado
+                  className="h-full w-full object-cover object-bottom transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:scale-110 focus-visible:scale-110"
                   loading="lazy"
                   decoding="async"
                   sizes="(max-width: 768px) 33vw, 33vw"
+                  tabIndex={0}
                 />
               </div>
             ))}
@@ -306,17 +312,19 @@ export function HomePage({ social }) {
               </h3>
               <div className="mt-3 grid grid-cols-3 gap-3">
                 {[style1, style2, style3].map((src, i) => (
+                  // `group` permite aplicar el zoom al <img> en hover/focus
                   <div
                     key={i}
-                    className="aspect-square overflow-hidden rounded-xl ring-1 ring-black/5"
+                    className="aspect-square overflow-hidden rounded-xl ring-1 ring-black/5 group"
                   >
                     <img
                       src={src}
                       alt={`Mi estilo ${i + 1}`}
-                      className="h-full w-full object-cover object-bottom"
+                      className="h-full w-full object-cover object-bottom transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:scale-110 focus-visible:scale-110"
                       loading="lazy"
                       decoding="async"
                       sizes="(max-width: 768px) 33vw, 33vw"
+                      tabIndex={0}
                     />
                   </div>
                 ))}

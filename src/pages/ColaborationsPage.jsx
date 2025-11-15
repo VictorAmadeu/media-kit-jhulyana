@@ -15,25 +15,34 @@ import thaisInsights from "../assets/jhulyana/colaboraciones/thaisrodrigues-insi
 
 // Mock-up de iPhone (ratio 9:19 usando aspect-9/19)
 // Muestra la publicación dentro de un marco que simula un iPhone.
+// Añadimos un zoom/parallax sutil sobre la foto (no sobre el marco).
 function IPhoneMock({ src, alt }) {
   return (
     <div
       className="relative w-full max-w-[340px] md:max-w-[380px] mx-auto"
       aria-label="Publicación renderizada dentro de un iPhone"
     >
+      {/* Marco exterior del teléfono */}
       <div className="relative rounded-[3rem] bg-black p-2 shadow-xl ring-1 ring-black/10">
+        {/* Borde interior suave del teléfono */}
         <div className="absolute inset-0 rounded-[3rem] ring-1 ring-white/10 pointer-events-none" />
-        <div className="relative rounded-[2.6rem] overflow-hidden bg-black aspect-9/19">
+        {/* `group` permite aplicar la animación solo a la imagen interna */}
+        <div className="relative rounded-[2.6rem] overflow-hidden bg-black aspect-9/19 group">
+          {/* Isla dinámica (notch) del iPhone */}
           <div
             className="absolute left-1/2 -translate-x-1/2 top-2 h-4 w-28 rounded-full bg-black ring-1 ring-white/10"
             aria-hidden="true"
           />
+          {/* Imagen de la colaboración dentro del mock-up */
+          /* La animación de zoom se aplica en hover/focus, pero siempre mantiene
+   el encuadre completo gracias a `object-cover` y al contenedor fijo. */}
           <img
             src={src}
             alt={alt}
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-cover select-none"
+            className="h-full w-full object-cover select-none transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:scale-110 focus-visible:scale-110"
+            tabIndex={0}
           />
         </div>
       </div>
@@ -43,8 +52,8 @@ function IPhoneMock({ src, alt }) {
 
 /**
  * Tarjeta de insights:
- * - En móvil: object-contain para ver la imagen completa.
- * - En md+: object-cover para mantener el look lleno.
+ * - En móvil **y también en pantallas medianas/grandes** usamos `object-contain`
+ *   para que se vea la captura COMPLETA (sin recortar números ni gráficos).
  * - Lupa: hover (desktop), active (móvil) y focus-visible (teclado).
  * - Microinteracción extra: sombra suave al hacer zoom (hover/focus).
  */
@@ -58,8 +67,8 @@ function InsightCard({ src, alt }) {
         decoding="async"
         tabIndex={0} /* accesible: permite focus con teclado */
         className="
-          w-full h-152 md:h-176         /* alturas originales */
-          object-contain md:object-cover /* móvil: entero; md+: look lleno */
+          w-full h-152 md:h-176         /* alturas fijas para que todas las tarjetas se alineen */
+          object-contain md:object-contain /* SIEMPRE imagen completa, en móvil y en md+ */
           transition-transform duration-300 ease-out
           transform-gpu will-change-transform
           group-hover:scale-110          /* lupa en desktop */
@@ -148,7 +157,7 @@ export function ColaborationsPage() {
               </a>
             </p>
 
-            {/* Mock-up de la publicación en un iPhone */}
+            {/* Mock-up de la publicación en un iPhone con zoom sutil en la foto */}
             <IPhoneMock src={c.photo} alt={c.altPhoto} />
 
             {/* Tarjeta de insights con microinteracción de zoom + sombra */}
