@@ -212,7 +212,7 @@ export function HomePage({ social }) {
           {/* Subtagline con ubicación y especialidad */}
           <p className="mt-1 text-[--ink] text-base md:text-lg font-medium">
             Brasileña en Madrid <span className="hidden sm:inline">|</span>{" "}
-            Especialista en Estilo y Cachos
+            Especialista en Estilo y Rizos
           </p>
 
           {/* Hashtag de marca #ARMARIOSINPANTALONES */}
