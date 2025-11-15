@@ -14,6 +14,8 @@ import { TikTokIcon } from "../components/icons/TikTokIcon";
 import ScrollIndicator from "../components/ScrollIndicator";
 // Barra flotante de redes sociales (solo en pantallas grandes)
 import { FloatingSocialBar } from "../components/FloatingSocialBar";
+// Enlace con scroll suave para anchors internos (#section)
+import SmoothScrollLink from "../components/SmoothScrollLink";
 
 // Importa tus fotos locales (mosaico principal del HERO)
 import hero1 from "../assets/jhulyana/home/hero-1.jpg";
@@ -25,7 +27,7 @@ import style1 from "../assets/jhulyana/home/hero-4.jpg";
 import style2 from "../assets/jhulyana/home/hero-5.jpg";
 import style3 from "../assets/jhulyana/home/hero-6.jpg";
 
-// Tarjeta simple para redes (icon-only + valor)
+// Tarjeta simple para redes (icon-only + valor).
 // Se utiliza para mostrar TikTok PT, Instagram y TikTok ES.
 const SocialCard = ({ href, icon, label, value }) => (
   <a
@@ -44,7 +46,7 @@ const SocialCard = ({ href, icon, label, value }) => (
   </a>
 );
 
-// Tarjeta de estadística (no clicable)
+// Tarjeta de estadística (no clicable).
 // Se usa para mostrar datos de audiencia: seguidores, localización, género, engagement.
 const Stat = ({ icon, label, value }) => (
   <div className="rounded-xl border border-black/5 bg-white p-3 text-center shadow-sm">
@@ -159,7 +161,7 @@ export function HomePage({ social }) {
         </section>
 
         {/* Sobre mí + Audiencia + Estilo + Destaques */}
-        {/* Añadimos id="about-section" para que el ScrollIndicator pueda hacer scroll suave hasta aquí */}
+        {/* id="about-section" lo usa ScrollIndicator para hacer scroll suave hasta aquí */}
         <section id="about-section" className="px-6 md:px-10 py-8">
           <div className="grid md:grid-cols-[2fr_3fr] gap-8">
             {/* Columna izquierda: texto "Sobre mí" */}
@@ -272,9 +274,9 @@ export function HomePage({ social }) {
           </div>
         </section>
 
-        {/* CTA final (icon-only) que lleva al formulario de contacto (otra página/anchor) */}
+        {/* CTA final (icon-only) que lleva al formulario de contacto mediante scroll suave */}
         <div className="px-6 md:px-10 pb-10 flex flex-col items-center gap-3">
-          <a
+          <SmoothScrollLink
             href="#contacto"
             aria-label="Ir al formulario de contacto"
             className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[--cherry] text-white hover:opacity-90 transition"
@@ -289,7 +291,7 @@ export function HomePage({ social }) {
             >
               <path d="M4 4h16v16H4z" />
             </svg>
-          </a>
+          </SmoothScrollLink>
           <p className="text-sm" style={{ color: "var(--muted)" }}>
             ¿Interesado en una colaboración personalizada? ¡Hablemos!
           </p>
