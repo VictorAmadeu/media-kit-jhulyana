@@ -195,7 +195,7 @@ Crea la tabla en Supabase con los siguientes campos (tipos sugeridos):
 
 ## 📄 Licencia
 
-Este proyecto se distribuye bajo la licencia **MIT**. Consulta el fichero [`LICENSE`](LICENSE) si decides añadirlo. Si reutilizas el diseño o el código, atribuye a la autora original del media kit y respeta las marcas registradas.
+Este proyecto se distribuye bajo la licencia **MIT**. Consulta el fichero [`LICENSE`](LICENSE) si decides añadirlo. Si reutilizas el diseño o el código, atribuye al autor original del media kit (Victor Amadeu) y respeta las marcas registradas.
 
 ---
 
